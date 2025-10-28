@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>과일 마켓</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<div th:replace="fragments/menu :: menu"></div>
+
+	<h1>신선한 과일을 만나보세요!</h1>
+
+	<table class="fruits-table">
+		<tr>
+			<td class="fruit"><img
+				src="https://upload.wikimedia.org/wikipedia/commons/1/15/Red_Apple.jpg"
+				alt="사과">
+				<h3>사과</h3>
+				<p>₩1,000</p></td>
+			<td class="fruit"><img
+				src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg"
+				alt="바나나">
+				<h3>바나나</h3>
+				<p>₩800</p></td>
+			<td class="fruit"><img
+				src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Strawberry.jpg"
+				alt="딸기">
+				<h3>딸기</h3>
+				<p>₩1,500</p></td>
+		</tr>
+	</table>
+	<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

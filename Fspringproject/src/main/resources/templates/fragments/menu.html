@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>메뉴</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<div th:fragment="menu">
+
+		<table class="top-nav-table">
+			<tr>
+
+				<td class="left"><a href="/main.to">홈</a></td>
+
+
+				<td class="center">과일마켓</td>
+
+
+				<td class="right"><a href="">로그인</a> <a href="/insertUs.to">회원가입</a>
+					<a href="#">장바구니</a> <a href="#">고객센터</a></td>
+			</tr>
+		</table>
+
+
+		<table class="main-nav-table">
+			<tr>
+				<td><a href="#">과일 목록</a></td>
+				<td><a href="#">공지사항</a></td>
+				<td><a href="#">문의사항</a></td>
+				<td><a href="#">리뷰게시판</a></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

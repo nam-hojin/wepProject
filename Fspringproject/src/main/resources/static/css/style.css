@@ -1,0 +1,139 @@
+@charset "UTF-8";
+
+.top-nav-table td a, .main-nav-table td a {
+	font-size: 10pt; /* 글자 크기 10pt */
+	text-decoration: none; /* 밑줄 제거 */
+	color: black; /* 기본 글자색 */
+	padding: 0; /* 여백 없음 */
+}
+
+/* 마우스 오버 시 글자색 노란색 */
+.top-nav-table td a:hover, .main-nav-table td a:hover {
+	color: yellow;
+}
+/* 테이블 기본 스타일 */
+.top-nav-table {
+	width: 100%;
+	border-collapse: collapse;
+	padding: 10px 0;
+	table-layout: fixed; /* 열 너비 균등 분할 */
+}
+
+/* 왼쪽 정렬, 홈 왼쪽 여백 10px */
+.top-nav-table .left {
+	text-align: left;
+	padding-left: 10px;
+}
+
+/* 가운데 정렬: 전체 테이블 기준으로 정가운데 */
+.top-nav-table .center {
+	text-align: center;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+/* 오른쪽 정렬 */
+.top-nav-table .right {
+	text-align: right;
+	padding-right: 10px; /* 오른쪽 여백 */
+}
+
+/* 링크 스타일 */
+.top-nav-table a {
+	text-decoration: none;
+	color: black;
+	margin: 0 10px;
+	font-weight: bold;
+}
+
+.top-nav-table .right a {
+	font-size: 5pt; /* ← 글자 크기 14pt */
+	margin: 0 5px; /* 좌우 간격 줄임 (기존 10px → 5px) */
+	letter-spacing: -1px; /* 글자 간격 살짝 줄임 */
+	white-space: nowrap; /* 한 줄 유지 */
+}
+
+.top-nav-table a:hover {
+	color: #007bff;
+}
+
+.main-nav-table {
+	width: 100%; /* 테이블 전체 너비 */
+	border-collapse: collapse;
+	text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+.main-nav-table td {
+	width: 25%; /* 4개 메뉴일 경우 각 셀 너비 25% */
+}
+
+.main-nav-table td a {
+	font-size: 10pt;
+	text-decoration: none;
+	color: black;
+	display: block; /* 셀 전체 클릭 가능 */
+	padding: 5px 0;
+}
+
+.main-nav-table td a:hover {
+	color: yellow;
+}
+
+body {
+	font-family: Arial, sans-serif;
+	background-color: #fff8dc;
+	text-align: center;
+}
+
+h1 {
+	color: #ff4500;
+}
+
+.fruits {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 20px;
+	margin-top: 30px;
+}
+
+.fruit {
+	border: 2px solid #ffa500;
+	border-radius: 10px;
+	padding: 20px;
+	width: 150px;
+	background-color: #fff5e6;
+}
+
+.fruit img {
+	width: 100px;
+	height: 100px;
+}
+
+.footer-divider {
+	border-top: 2px solid #000; /* 검은색 가로줄 */
+	margin: 0; /* 위/아래 여백 제거 */
+}
+
+.footer {
+	background-color: #f8f8f8;
+	height: 25px; /* 푸터 높이 고정 */
+	font-size: 3pt; /* 글자 크기 최소화 */
+	overflow: hidden; /* 내용이 넘치면 숨김 */
+	padding: 0; /* 위/아래 여백 제거 */
+}
+
+.footer-table {
+	table-layout: fixed; /* 열 너비 균등 */
+	height: 100%;
+	margin: 0;
+}
+
+.footer-cell {
+	text-align: left;
+	vertical-align: middle; /* 세로 가운데 정렬 */
+	padding: 0;
+	white-space: nowrap; /* 한 줄 유지 */
+	overflow: hidden; /* 넘치면 숨김 */
+	text-overflow: ellipsis; /* 넘치면 ... 처리 */
+}

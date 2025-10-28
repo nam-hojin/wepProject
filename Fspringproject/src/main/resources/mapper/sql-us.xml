@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.embed.mapper.Usmapper">
+	<insert id="insertUs" parameterType="org.embed.dto.UsDTO">
+ <![CDATA[
+ 	INSERT INTO us
+ 	(
+ 	userName,
+ 	password,
+ 	name,
+ 	phone,
+ 	email,
+ 	birth,
+ 	gender
+ 	)
+ 	VALUES
+ 	(
+ 	#{userName},
+ 	#{password},
+ 	#{name},
+ 	#{phone},
+ 	#{email},
+ 	#{birth},
+ 	#{gender}
+ 	)
+ 
+ ]]>
+
+	</insert>
+
+	<update id="updateUs" parameterType="org.embed.dto.UsDTO">
+	
+	<![CDATA[
+	UPDATE 
+		 us
+	SET 
+ 	user_name=#{userName},
+ 	password=#{password},
+ 	name=#{name},
+ 	phone=#{phone},
+ 	email=#{email},
+ 	birth=#{birth},
+ 	gender=#{gender}
+ 	WHERE
+ 	user_id=#{userId}
+ 	
+ 		]]>
+
+
+
+
+
+
+
+	</update>
+
+	<delete id="deleteUs" parameterType="int">
+		DELETE
+		FROM
+		US
+		WHERE
+		user_id=#{userId}
+
+
+
+
+	</delete>
+
+
+
+</mapper>
