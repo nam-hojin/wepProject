@@ -1,7 +1,7 @@
 package org.embed.service;
 
 import org.embed.dto.UsDTO;
-import org.embed.mapper.Usmapper;
+import org.embed.mapper.UsMapper;
 
 public interface UsService  {
 

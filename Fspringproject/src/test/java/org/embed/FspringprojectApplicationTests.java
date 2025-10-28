@@ -4,7 +4,7 @@ import java.lang.reflect.Parameter;
 import java.security.PublicKey;
 
 import org.embed.dto.UsDTO;
-import org.embed.mapper.Usmapper;
+import org.embed.mapper.UsMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class FspringprojectApplicationTests {
 	@Autowired
-	private Usmapper usmapper;
+	private UsMapper usmapper;
 	
 	/*
 	  @Test
