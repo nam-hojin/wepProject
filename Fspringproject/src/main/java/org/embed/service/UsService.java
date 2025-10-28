@@ -3,7 +3,7 @@ package org.embed.service;
 import org.embed.dto.UsDTO;
 import org.embed.mapper.Usmapper;
 
-public interface Usservice  {
+public interface UsService  {
 
 	
 	int insertUs(UsDTO us)throws Exception;

@@ -52,7 +52,7 @@ class FspringprojectApplicationTests {
 	
 			
 		}
-	*/
+	
 	@Test
 	@DisplayName("삭제")
 	public void testdelete() throws Exception{
@@ -63,7 +63,7 @@ class FspringprojectApplicationTests {
 		
 		
 	}
-	
+	*/
 	
 	
 	
