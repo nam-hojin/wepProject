@@ -19,6 +19,8 @@ public class UsServiceImpl implements UsService {
     public int insertUs(UsDTO us) throws Exception {
         return usMapper.insertUs(us);
     }
+    
+    
 }
 
 	/*

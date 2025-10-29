@@ -34,8 +34,14 @@ public class UsController {
 	 @RequestMapping("/insertUs.to") 
 	 public String insertUs (@ModelAttribute UsDTO user) throws Exception { 
 	  usService.insertUs(user);
-	  return "redirect:/main.to"; 
+	 	return "redirect:/main.to"; 
 	  }
 	 
-
+	 @RequestMapping("/login.to")
+	 public String login() {
+		 
+		 return "/login";
+	 }
+	 
+	 
 }
