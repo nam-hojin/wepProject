@@ -7,7 +7,7 @@
  <![CDATA[
  	INSERT INTO us
  	(
- 	userName,
+ 	user_name,
  	password,
  	name,
  	phone,
@@ -30,7 +30,7 @@
 
 	</insert>
 
-	<update id="updateUs" parameterType="org.embed.dto.UsDTO">
+	<!-- <update id="updateUs" parameterType="org.embed.dto.UsDTO">
 	
 	<![CDATA[
 	UPDATE 
@@ -69,5 +69,5 @@
 	</delete>
 
 
-
+ -->
 </mapper>
