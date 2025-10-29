@@ -8,7 +8,7 @@
  	INSERT INTO us
  	(
  	user_name,
- 	password,
+ 	user_password,
  	name,
  	phone,
  	email,
@@ -18,7 +18,7 @@
  	VALUES
  	(
  	#{userName},
- 	#{password},
+ 	#{userPassword},
  	#{name},
  	#{phone},
  	#{email},
@@ -27,17 +27,12 @@
  	)
  
  ]]>
-
 	</insert>
-	
-	<select id="">
-	
-	
-	
-	
-	
-	
-	</select>
+	<select  parameterType="string" resultType="org.embed.dto.UsDTO">
+        SELECT *
+        FROM us
+       	WHERE user_name = #{userName}
+    </select>
 	
 	
 

@@ -10,7 +10,7 @@ public class UsDTO {
 
 	private int userId;
 	private String userName;
-	private String password;
+	private String userPassword;
 	private String passwordCheck; 
 	private String name;
 	private String phone;

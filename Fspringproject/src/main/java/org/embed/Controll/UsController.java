@@ -42,6 +42,12 @@ public class UsController {
 		 
 		 return "/login";
 	 }
+	 @RequestMapping("/loginProsses.to")
+	 public String loginProsses() {
+		 
+		 return "";
+		 
+	 }
 	 
 	 
 }
