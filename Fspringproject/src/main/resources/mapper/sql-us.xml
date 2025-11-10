@@ -28,11 +28,11 @@
  
  ]]>
 	</insert>
-	<select  parameterType="string" resultType="org.embed.dto.UsDTO">
+	<!-- <select  parameterType="string" resultType="org.embed.dto.UsDTO">
         SELECT *
         FROM us
        	WHERE user_name = #{userName}
-    </select>
+    </select> -->
 	
 	
 
