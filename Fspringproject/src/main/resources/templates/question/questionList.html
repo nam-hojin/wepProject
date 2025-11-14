@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>자주하는 질문</title>
+    <link rel="stylesheet" th:href="@{/css/notice.css}">
+</head>
+<body>
+    <h1>자주하는 질문</h1>
+    <table border="1" cellspacing="0" cellpadding="5">
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>조회수</th>
+                <th>작성일</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="question : ${questionList}">
+                <td th:text="${question.postId}"></td>
+                <td>
+                    <a th:href="@{'/question.eo/detail.eo/' + ${question.postId}}"
+                       th:text="${question.title}"></a>
+                </td>
+                <td th:text="${question.writer}"></td>
+                <td th:text="${question.viewCount}"></td>
+                <td th:text="${#dates.format(question.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <!-- 글쓰기 버튼 (관리자만 보임) -->
+    <div th:if="${session.loginUser != null and session.loginUser.role.equalsIgnoreCase('ADMIN')}">
+        <a href="/question.eo/create.eo">글쓰기</a>
+    </div>
+    <a th:href="@{/main.to}">
+    <button>홈으로</button>
+	</a>
+</body>

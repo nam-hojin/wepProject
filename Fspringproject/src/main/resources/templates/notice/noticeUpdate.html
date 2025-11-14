@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>공지 수정</title>
+    <link rel="stylesheet" th:href="@{/css/notice.css}">
+</head>
+<body>
+    <h1>공지 수정</h1>
+
+    <form th:action="@{/notice.do/update.do}" method="post" th:object="${notice}">
+        <!-- Hidden field로 postId 전달 -->
+        <input type="hidden" th:field="*{postId}">
+
+        <p>제목: <input type="text" th:field="*{title}"></p>
+        <p>내용: <textarea th:field="*{content}"></textarea></p>
+        <p>작성자: <input type="text" th:field="*{writer}"></p>
+        <button type="submit">수정</button>
+    </form>
+
+    <!-- 목록 페이지로 이동 버튼 -->
+    <p><a th:href="@{/notice.do/list.do}">목록</a></p>
+</body>
+</html>

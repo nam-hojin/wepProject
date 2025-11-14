@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>질문 목록</title>
+   <link rel="stylesheet" type="text/css" th:href="@{/css/userList.css}">
+</head>
+<body>
+
+    <h1 id="page-title">질문 목록</h1>
+
+    <table border="1" id="question-table">
+        <thead>
+            <tr>
+                <th id="th-number">번호</th>
+                <th id="th-title">제목</th>
+                <th id="th-writer">작성자</th>
+                <th id="th-date">작성일</th>
+            </tr>
+        </thead>
+        <tbody id="question-tbody">
+            <tr th:each="question : ${questionList}" id="question-row">
+                <td th:text="${question.postId}" class="question-id"></td>
+                <td>
+                    <a th:href="@{'/question.eo/detail.eo/' + ${question.postId}}" 
+                       th:text="${question.title}" class="question-title"></a>
+                </td>
+                <td th:text="${question.writer}" class="question-writer"></td>
+                <td th:text="${#dates.format(question.createdAt, 'yyyy-MM-dd HH:mm')}" class="question-date"></td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+
+    <div th:if="${session.loginUser != null and session.loginUser.role.equalsIgnoreCase('ADMIN')}" id="admin-actions">
+        <button id="create-question-btn" onclick="location.href='/question.eo/create.eo'">질문 작성</button>
+    </div>
+
+    <a th:href="@{/main.to}">
+        <button id="home-btn">홈으로</button>
+    </a>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>공지 상세</title>
+    <link rel="stylesheet" th:href="@{/css/notice.css}">
+</head>
+<body>
+    <h1>공지 상세</h1>
+
+    <p>번호: <span th:text="${notice.postId}"></span></p>
+    <p>제목: <span th:text="${notice.title}"></span></p>
+    <p>내용: <span th:text="${notice.content}"></span></p>
+    <p>작성자: <span th:text="${notice.writer}"></span></p>
+    <p>작성일: <span th:text="${#dates.format(notice.createdAt, 'yyyy-MM-dd HH:mm')}"></span></p>
+
+    <!-- 수정 버튼 (관리자만 보임) -->
+    <p th:if="${session.loginUser != null and session.loginUser.role.equalsIgnoreCase('ADMIN')}">
+        <a th:href="@{/notice.do/update.do/{postId}(postId=${notice.postId})}">수정</a>
+    </p>
+
+    <!-- 삭제 버튼 (관리자만 보임) -->
+    <p th:if="${session.loginUser != null and session.loginUser.role.equalsIgnoreCase('ADMIN')}">
+        <a th:href="@{/notice.do/delete.do/{postId}(postId=${notice.postId})}"
+           onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+    </p>
+
+    <!-- 목록 페이지로 이동 (모두 보임) -->
+    <p><a th:href="@{/notice.do/list.do}">목록</a></p>
+</body>
+</html>

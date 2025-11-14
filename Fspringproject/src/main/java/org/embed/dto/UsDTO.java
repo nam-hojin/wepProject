@@ -17,6 +17,6 @@ public class UsDTO {
 	private String email;
 	private String birth;
 	private String gender;
-	
+	private String role; 
 	
 }
