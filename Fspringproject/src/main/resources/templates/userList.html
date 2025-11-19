@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원관리</title>
+    <style>
+        /* ========================= */
+        /* 상단 네비게이션 고정      */
+        /* ========================= */
+        .top-nav-table {
+            width: 100%;
+            border-collapse: collapse;
+            padding: 10px 0;
+            table-layout: fixed;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #fff8dc;
+            z-index: 1000;
+        }
+
+        .top-nav-table td a {
+            font-size: 10pt;
+            text-decoration: none;
+            color: black;
+            padding: 0;
+        }
+
+        .top-nav-table td a:hover { color: yellow; }
+
+        .top-nav-table .left { text-align: left; padding-left: 10px; }
+        .top-nav-table .center { text-align: center; font-weight: bold; font-size: 18px; }
+        .top-nav-table .right { text-align: right; padding-right: 10px; }
+        .top-nav-table .right a { font-size: 5pt; margin: 0 5px; letter-spacing: -1px; white-space: nowrap; }
+
+        /* ========================= */
+        /* 메인 네비게이션 고정      */
+        /* ========================= */
+        .main-nav-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            position: fixed;
+            top: 50px; /* 상단 메뉴 아래 위치 */
+            left: 0;
+            background-color: #fff8dc;
+            z-index: 999;
+        }
+
+        .main-nav-table td { width: 16.66%; }
+
+        .main-nav-table td a {
+            display: block;
+            padding: 5px 0;
+            text-decoration: none;
+            color: black;
+        }
+
+        .main-nav-table td a:hover { color: yellow; }
+
+        /* ========================= */
+        /* 본문 패딩 확보            */
+        /* ========================= */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff8dc;
+            text-align: center;
+            padding-top: 90px; /* 상단 + 메인 메뉴 높이 확보 */
+        }
+
+        /* ========================= */
+        /* 페이지 타이틀             */
+        /* ========================= */
+        #page-title {
+            color: #ff4500;
+            margin-bottom: 20px;
+        }
+
+        /* ========================= */
+        /* 회원 테이블 스타일        */
+        /* ========================= */
+        #user-table {
+            width: 90%;
+            margin: 0 auto 30px auto;
+            border-collapse: collapse;
+            background-color: #fff5e6;
+            border: 2px solid #ffa500;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #user-table th, #user-table td {
+            border: 1px solid #ffa500;
+            padding: 8px 12px;
+            text-align: center;
+        }
+
+        #user-table th {
+            background-color: #ffdab9;
+            font-weight: bold;
+        }
+
+        #user-table tr:nth-child(even) { background-color: #fff0d4; }
+        #user-table tr:hover { background-color: #ffe4b5; }
+
+        /* ========================= */
+        /* 메인으로 링크 버튼        */
+        /* ========================= */
+        #home-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff4500;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 50px;
+            transition: background-color 0.3s;
+        }
+
+        #home-link:hover { background-color: #ff7f50; }
+
+        /* ========================= */
+        /* 푸터 고정형               */
+        /* ========================= */
+        .footer {
+            background-color: #f8f8f8;
+            height: 25px;
+            font-size: 5pt;
+            overflow: hidden;
+            padding: 0;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .footer-divider { border-top: 2px solid #000; margin: 0; }
+    </style>
+</head>
+<body>
+    <div th:replace="fragments/menu :: menu"></div>
+
+    <h2 id="page-title">관리자 회원관리 페이지</h2>
+
+    <table border="1" id="user-table">
+        <thead>
+            <tr>
+                <th id="th-userId">회원ID</th>
+                <th id="th-username">아이디</th>
+                <th id="th-password">비밀번호</th>
+                <th id="th-name">이름</th>
+                <th id="th-phone">전화번호</th>
+                <th id="th-email">이메일</th>
+                <th id="th-birth">생년월일</th>
+                <th id="th-gender">성별</th>
+                <th id="th-role">권한</th>
+            </tr>
+        </thead>
+        <tbody id="user-tbody">
+            <tr th:each="user : ${users}" class="user-row">
+                <td th:text="${user.userId}" class="user-id"></td>
+                <td th:text="${user.userName}" class="user-username"></td>
+                <td th:text="${user.userPassword}" class="user-password"></td>
+                <td th:text="${user.name}" class="user-name"></td>
+                <td th:text="${user.phone}" class="user-phone"></td>
+                <td th:text="${user.email}" class="user-email"></td>
+                <td th:text="${user.birth}" class="user-birth"></td>
+                <td th:text="${user.gender}" class="user-gender"></td>
+                <td th:text="${user.role}" class="user-role"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/main.to}" id="home-link">메인으로</a>
+
+    <!-- 푸터 예시 -->
+    <div class="footer">
+        <span>© 2025 비타민 마켓</span>
+    </div>
+</body>
+</html>

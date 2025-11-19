@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>공지 작성</title>
+    <link rel="stylesheet" th:href="@{/css/notice.css}">
+</head>
+<body>
+    <h1>공지 작성</h1>
+    <form action="/notice.do/create.do" method="post">
+        <p>제목: <input type="text" name="title"></p>
+        <p>내용: <textarea name="content"></textarea></p>
+        <p>작성자: <input type="text" name="writer"></p>
+        <button type="submit">작성</button>
+    </form>
+    <br>
+    <button onclick="location.href='/notice.do/list.do'">목록</button>
+</body>
+</html>

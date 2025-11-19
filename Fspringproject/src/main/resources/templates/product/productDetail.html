@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 상세</title>
+</head>
+<body>
+	
+<div class="container">
+    <h2>상품 상세</h2>
+
+    <table>
+        <tr>
+            <th>이미지</th>
+            <td>
+                <div th:if="${product.imageUrl != null}">
+                    <img th:src="${product.imageUrl}" alt="상품 이미지" width="150"/>
+                </div>
+                <div th:if="${product.imageUrl == null}">
+                    이미지 없음
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th>상품명</th>
+            <td th:text="${product.name}">상품명</td>
+        </tr>
+        <tr>
+            <th>카테고리</th>
+            <td th:text="${product.category}">카테고리</td>
+        </tr>
+        <tr>
+            <th>가격</th>
+            <td th:text="${product.price} + ' 원'">0 원</td>
+        </tr>
+        <tr>
+            <th>재고</th>
+            <td th:text="${product.stock} + ' 개'">0 개</td>
+        </tr>
+        <tr>
+            <th>설명</th>
+            <td th:text="${product.description}">설명</td>
+        </tr>
+        <tr>
+            <th>등록일</th>
+            <td th:text="${#temporals.format(product.createdAt, 'yyyy-MM-dd HH:mm')}">등록일</td>
+        </tr>
+        <tr>
+            <th>수정일</th>
+            <td th:text="${#temporals.format(product.updatedAt, 'yyyy-MM-dd HH:mm')}">수정일</td>
+        </tr>
+    </table>
+
+    <div>
+    
+   <form th:action="@{/cart/add}" method="post" style="display:inline;">
+    <input type="hidden" name="productId" th:value="${product.productId}" />
+    <input type="hidden" name="quantity" value="1" />
+    <button type="submit">찜하기</button>
+</form>
+    
+        <a th:href="@{/admin/products.fo}">목록으로</a>
+    </div>
+</div>
+</body>
+</html>

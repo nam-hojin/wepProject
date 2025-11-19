@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>자주하는 질문 작성</title>
+    <link rel="stylesheet" th:href="@{/css/notice.css}">
+    
+</head>
+<body>
+    <h1>질문 작성</h1>
+    <form th:action="@{/question.eo/create.eo}" method="post">
+        <p>제목: <input type="text" name="title" required></p>
+        <p>내용: <textarea name="content" rows="5" cols="50" required></textarea></p>
+        <p>작성자: <input type="text" name="writer" required></p>
+        <button type="submit">작성</button>
+    </form>
+    <br>
+    <a href="/question.eo/list.eo">목록</a>
+</body>
+</html>

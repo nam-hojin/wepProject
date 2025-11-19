@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 삭제</title>
+</head>
+<body>
+	
+<h1>상품 삭제</h1>
+
+<!-- 이미지 먼저 -->
+<div>
+    <label>상품 이미지:</label>
+    <div th:if="${product.imageUrl}">
+        <img th:src="@{${product.imageUrl}}" alt="상품 이미지" width="150"/>
+    </div>
+</div>
+
+<!-- 나머지 정보 -->
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <td th:text="${product.productId}"></td>
+    </tr>
+    <tr>
+        <th>상품 이름</th>
+        <td th:text="${product.name}"></td>
+    </tr>
+    <tr>
+        <th>카테고리</th>
+        <td th:text="${product.category}"></td>
+    </tr>
+    <tr>
+        <th>가격</th>
+        <td th:text="${product.price}"></td>
+    </tr>
+    <tr>
+        <th>재고</th>
+        <td th:text="${product.stock}"></td>
+    </tr>
+    <tr>
+        <th>설명</th>
+        <td th:text="${product.description}"></td>
+    </tr>
+</table>
+
+<!-- 삭제/취소 버튼 -->
+<div style="margin-top: 20px;">
+    <form th:action="@{/admin/products/delete.fo}" method="post" style="display:inline;">
+        <input type="hidden" name="id" th:value="${product.productId}"/>
+        <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?');">삭제 확인</button>
+    </form>
+    <a th:href="@{/admin/products.fo}">취소</a>
+</div>
+
+</body>
+</html>

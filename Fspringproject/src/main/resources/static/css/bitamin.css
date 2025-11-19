@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #fff8f0;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* 주스 레시피 컨테이너 */
+.juice-recipe-container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 각 주스 레시피 스타일 */
+.juice-recipe {
+    margin-bottom: 30px;
+    padding: 15px;
+    border-left: 5px solid #ff6f61;
+}
+
+.juice-title {
+    font-size: 28px;
+    color: #ff6f61;
+    margin-bottom: 10px;
+}
+
+.ingredient, .effect, .tip {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+strong {
+    color: #ff6f61;
+}
+
+/* 각 주스 아이콘 색상 */
+.juice-recipe:nth-child(1) { border-left: 5px solid #8bc34a; }
+.juice-recipe:nth-child(2) { border-left: 5px solid #ffeb3b; }
+.juice-recipe:nth-child(3) { border-left: 5px solid #ff9800; }
+.juice-recipe:nth-child(4) { border-left: 5px solid #4caf50; }
+
+/* 기본 제목 스타일 */
+h1 {
+    font-size: 2.5em;
+    text-align: center;
+    margin-top: 30px;
+    color: #ff6f61;
+}
+
+/* 카드 스타일 */
+.juice-card {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.juice-card h2 {
+    font-size: 28px;
+    color: #ff8c42;
+    margin-bottom: 15px;
+}
+
+.section-title {
+    font-weight: bold;
+    color: #ff6f61;
+}
+
+/* 카드 배경 교차 */
+.juice-card:nth-child(odd) {
+    background-color: #ecf0f1;
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 수정</title>
+</head>
+<body>
+<div class="container">
+    <h2>상품 수정</h2>
+
+    <form th:action="@{/admin/products/update.fo}" method="post" enctype="multipart/form-data" th:object="${product}">
+        <input type="hidden" th:field="*{productId}"/>
+
+        <div>
+            <label for="image">상품 이미지:</label>
+            <input type="file" id="image" name="imageFile"/> <!-- DTO의 MultipartFile 필드 이름과 일치 -->
+
+            <div th:if="${product.imageUrl != null}">
+                <img th:src="${product.imageUrl}" alt="상품 이미지" width="150"/>
+            </div>
+        </div>
+
+        <div>
+            <label for="name">상품명:</label>
+            <input type="text" id="name" th:field="*{name}" required/>
+        </div>
+
+        <div>
+            <label for="category">카테고리:</label>
+            <input type="text" id="category" th:field="*{category}" required/>
+        </div>
+
+        <div>
+            <label for="price">가격:</label>
+            <input type="number" step="0.01" id="price" th:field="*{price}" required/>
+        </div>
+
+        <div>
+            <label for="stock">재고:</label>
+            <input type="number" id="stock" th:field="*{stock}"/>
+        </div>
+
+        <div>
+            <label for="description">상품 설명:</label>
+            <textarea id="description" th:field="*{description}"></textarea>
+        </div>
+
+        <button type="submit">수정</button>
+        <a th:href="@{/admin/products.fo}">목록으로</a>
+    </form>
+</div>
+</body>
+</html>

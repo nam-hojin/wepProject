@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.embed.mapper.CartMapper">
+
+    <insert id="insertCart" useGeneratedKeys="true" keyProperty="cartId">
+        INSERT INTO cart (user_id, created_at, updated_at)
+        VALUES (#{userId}, #{createdAt}, #{updatedAt})
+    </insert>
+
+    <insert id="insertCartItem" useGeneratedKeys="true" keyProperty="cartItemId">
+        INSERT INTO cart_item (cart_id, product_id, quantity, added_at)
+        VALUES (#{cartId}, #{productId}, #{quantity}, #{addedAt})
+    </insert>
+
+    <delete id="deleteCartItem">
+        DELETE FROM cart_item
+        WHERE cart_id = #{cartId} AND product_id = #{productId}
+    </delete>
+
+    <select id="selectCartByUserId" resultType="org.embed.dto.CartDTO">
+        SELECT cart_id, user_id, created_at, updated_at
+        FROM cart
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="selectCartItems" resultType="org.embed.dto.CartItemDTO">
+        SELECT cart_item_id, cart_id, product_id, quantity, added_at
+        FROM cart_item
+        WHERE cart_id = #{cartId}
+    </select>
+
+    <delete id="deleteCartItems">
+        DELETE FROM cart_item
+        WHERE cart_id = #{cartId}
+    </delete>
+
+</mapper>

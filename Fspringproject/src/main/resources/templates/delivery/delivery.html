@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>배송정보 입력</title>
+</head>
+<body>
+<h1>배송정보 입력</h1>
+
+<form th:action="@{/order/delivery}" th:object="${deliveryInfoForm}" method="post">
+    <table border="1">
+        <tr>
+            <th>상품 ID</th>
+            <th>수량</th>
+            <th>수령인</th>
+            <th>주소</th>
+            <th>전화번호</th>
+        </tr>
+        <tr th:each="dto, iterStat : ${deliveryInfoForm.deliveryInfoDTOs}">
+            <td>
+                <input type="hidden" th:field="*{deliveryInfoDTOs[__${iterStat.index}__].itemId}" />
+                <input type="hidden" th:field="*{deliveryInfoDTOs[__${iterStat.index}__].productId}" />
+                <input type="hidden" th:field="*{deliveryInfoDTOs[__${iterStat.index}__].quantity}" />
+                <span th:text="${dto.productId}"></span>
+            </td>
+            <td><span th:text="${dto.quantity}"></span></td>
+            <td><input type="text" th:field="*{deliveryInfoDTOs[__${iterStat.index}__].recipientName}" required /></td>
+            <td><input type="text" th:field="*{deliveryInfoDTOs[__${iterStat.index}__].address}" required /></td>
+            <td><input type="text" th:field="*{deliveryInfoDTOs[__${iterStat.index}__].phone}" required /></td>
+        </tr>
+    </table>
+    <button type="submit">주문 완료</button>
+</form>
+</body>
+</html>

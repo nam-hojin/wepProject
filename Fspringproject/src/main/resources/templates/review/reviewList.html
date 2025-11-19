@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>리뷰 목록</title>
+    <style>
+      body { font-family: Arial, sans-serif; }
+      .review { margin-bottom: 30px; padding: 10px; border: 1px solid #ddd; }
+      .review-header { font-weight: bold; margin-bottom: 5px; }
+      .reply { margin-left: 20px; padding-left: 10px; border-left: 2px solid #ccc; margin-top: 10px; }
+      .reply-header { font-size: 0.9em; color: #555; margin-bottom: 3px; }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+    <h1>리뷰 목록</h1>
+    <a th:href="@{/create.go}">리뷰 작성</a>
+    <hr/>
+
+    <div th:each="review : ${reviews}" class="review">
+        <div class="review-header">
+            <span th:text="${review.userName}">작성자 이름</span>
+            (ID: <span th:text="${review.userId}">0</span>) — 
+            <span th:text="${review.createdAt}">작성일</span>
+        </div>
+        <div class="review-content" th:text="${review.content}">내용</div>
+        <div class="review-actions">
+            <a th:href="@{/edit1/{id}.go(id=${review.id})}">수정</a>
+            <a th:href="@{/delete/{id}.go(id=${review.id})}">삭제</a>
+            <!-- 답변 작성 페이지로 이동하는 링크 -->
+            <a th:href="@{/reply/create/{reviewId}.go(reviewId=${review.id})}">답변 작성</a>
+        </div>
+
+        <div th:each="reply : ${review.replies}" class="reply">
+            <div class="reply-header">
+                <span th:text="${reply.userName}">답변자</span>
+                (ID: <span th:text="${reply.userId}">0</span>) — 
+                <span th:text="${reply.createdAt}">시간</span>
+            </div>
+            <div th:text="${reply.content}">답변 내용</div>
+            <div>
+                <a th:href="@{/reply/delete/{reviewId}/{replyId}.go(reviewId=${review.id}, replyId=${reply.id})}">
+                    답변 삭제
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

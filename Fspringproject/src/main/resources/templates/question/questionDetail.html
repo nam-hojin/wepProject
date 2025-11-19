@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>질문 상세</title>
+    <link rel="stylesheet" th:href="@{/css/notice.css}">
+</head>
+<body>
+    <h1>질문 상세</h1>
+    <p><strong>번호:</strong> <span th:text="${question.postId}"></span></p>
+    <p><strong>제목:</strong> <span th:text="${question.title}"></span></p>
+    <p><strong>작성자:</strong> <span th:text="${question.writer}"></span></p>
+    <p><strong>조회수:</strong> <span th:text="${question.viewCount}"></span></p>
+    <p><strong>작성일:</strong> <span th:text="${#dates.format(question.createdAt, 'yyyy-MM-dd HH:mm')}"></span></p>
+    <p><strong>내용:</strong></p>
+    <p th:text="${question.content}"></p>
+
+    <br>
+    <!-- 관리자만 수정/삭제 버튼 보이기 -->
+    <div th:if="${session.loginUser != null and session.loginUser.role.equalsIgnoreCase('ADMIN')}">
+        <a th:href="@{'/question.eo/update.eo/' + ${question.postId}}">수정</a> |
+        <a th:href="@{'/question.eo/delete.eo/' + ${question.postId}}"
+           onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a> |
+    </div>
+    
+    <!-- 목록 버튼은 모든 사용자에게 보이기 -->
+    <a href="/question.eo/list.eo">목록</a>
+</body>
+</html>

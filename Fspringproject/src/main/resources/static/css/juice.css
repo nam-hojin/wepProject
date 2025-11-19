@@ -1,0 +1,42 @@
+@charset "UTF-8";
+/* style.css */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #fff8f0;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #ff6f61;
+}
+
+.juice-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 500px;
+    transition: transform 0.2s;
+}
+
+.juice-card:hover {
+    transform: scale(1.02);
+}
+
+h2 {
+    color: #ff8c42;
+    margin-top: 0;
+}
+
+.ingredient, .effect, .tip {
+    margin: 10px 0;
+}
+
+.section-title {
+    font-weight: bold;
+    color: #ff6f61;
+}

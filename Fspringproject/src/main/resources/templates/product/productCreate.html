@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 등록</title>
+</head>
+<body>
+<h1>상품 등록</h1>
+<form th:action="@{/admin/products/create.fo}" th:object="${productDTO}" method="post" enctype="multipart/form-data">
+    <label>상품명:</label>
+    <input type="text" th:field="*{name}" required /><br/>
+
+    <label>카테고리:</label>
+    <input type="text" th:field="*{category}" required /><br/>
+
+    <label>가격:</label>
+    <input type="number" step="0.01" th:field="*{price}" required /><br/>
+
+    <label>재고:</label>
+    <input type="number" th:field="*{stock}" required /><br/>
+
+    <label>설명:</label>
+    <textarea th:field="*{description}"></textarea><br/>
+
+    <label>이미지:</label>
+    <input type="file" th:field="*{imageFile}" /><br/>
+
+    <button type="submit">등록</button>
+    <a th:href="@{/admin/products.fo}">목록으로</a>
+    
+</form>
+</body>
+</html>

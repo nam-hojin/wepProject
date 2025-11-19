@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 탈퇴</title>
+</head>
+<body>
+    <div class="box">
+        <h2>정말 회원을 탈퇴하시겠습니까?</h2>
+        
+     
+        <div th:if="${errorMessage}" style="color:red;">
+            <p th:text="${errorMessage}"></p>
+        </div>
+
+      
+        <div th:if="${user != null}">
+          
+            <form th:action="@{/delete.to}" method="post" 
+                  onsubmit="return confirm('정말 탈퇴하시겠습니까?');">
+               
+                <input type="hidden" name="userId" th:value="${user.userId}" />
+                <button type="submit">회원 탈퇴</button>
+            </form>
+        </div>
+
+      
+        <div th:if="${user == null}" style="color:red;">
+            <p>로그인이 필요합니다. <a th:href="@{/login.to}">로그인 페이지로 이동</a></p>
+        </div>
+
+       
+        <form th:action="@{/main.to}" method="get" style="margin-top:10px;">
+            <button type="submit">메인으로 돌아가기</button>
+        </form>
+    </div>
+</body>
+</html>
