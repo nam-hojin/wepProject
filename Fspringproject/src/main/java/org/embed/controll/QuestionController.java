@@ -92,8 +92,22 @@ public class QuestionController {
         questionService.updateQuestion(question);
         return "redirect:/question.eo/detail.eo/" + question.getPostId();
     }
+    
+    @GetMapping("/delete.eo/{postId}")
+    public String deleteQuestion(@PathVariable("postId") int postId, HttpSession session, Model model) throws Exception {
+        UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
+        if (loginUser == null || !"ADMIN".equalsIgnoreCase(loginUser.getRole())) {
+            model.addAttribute("errorMessage", "관리자 권한이 없습니다.");
+            return "redirect:/question.eo/list.eo";
+        }
+
+        questionService.deleteQuestion(postId);
+        return "redirect:/question.eo/list.eo";
+    }
+    
     @GetMapping("/main.to") 
     public String mainPage() {
         return "main"; 
     }
+ 
 }

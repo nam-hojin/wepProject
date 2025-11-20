@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고객센터 전화번호</title>
+    <style>
+        /* ========================= */
+        /* 상단 네비게이션 고정      */
+        /* ========================= */
+        .top-nav-table {
+            width: 100%;
+            border-collapse: collapse;
+            padding: 10px 0;
+            table-layout: fixed;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #fff8dc;
+            z-index: 1000;
+        }
+
+        .top-nav-table td a {
+            font-size: 10pt;
+            text-decoration: none;
+            color: black;
+        }
+
+        .top-nav-table td a:hover { color: yellow; }
+
+        .top-nav-table .left { text-align: left; padding-left: 10px; }
+        .top-nav-table .center { text-align: center; font-weight: bold; font-size: 18px; }
+        .top-nav-table .right { text-align: right; padding-right: 10px; }
+        .top-nav-table .right a { font-size: 5pt; margin: 0 5px; letter-spacing: -1px; white-space: nowrap; }
+
+        /* ========================= */
+        /* 메인 네비게이션 고정      */
+        /* ========================= */
+        .main-nav-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            position: fixed;
+            top: 50px; /* 상단 메뉴 아래 위치 */
+            left: 0;
+            background-color: #fff8dc;
+            z-index: 999;
+        }
+
+        .main-nav-table td { width: 16.66%; }
+
+        .main-nav-table td a {
+            display: block;
+            padding: 5px 0;
+            text-decoration: none;
+            color: black;
+        }
+
+        .main-nav-table td a:hover { color: yellow; }
+
+        /* ========================= */
+        /* 본문 패딩 확보            */
+        /* ========================= */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff8dc;
+            text-align: center;
+            padding-top: 90px; /* 상단 + 메인 메뉴 높이 확보 */
+        }
+
+        /* ========================= */
+        /* 전화번호 스타일           */
+        /* ========================= */
+        .phone-number {
+            margin: 20px auto;
+            padding: 15px 20px;
+            width: fit-content;
+            background-color: #ffdab9;
+            border: 2px solid #ffa500;
+            border-radius: 8px;
+            font-size: 16pt;
+            font-weight: bold;
+            color: #ff4500;
+            text-align: center;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* ========================= */
+        /* 버튼 스타일               */
+        /* ========================= */
+        button {
+            padding: 8px 15px;
+            background-color: #ff4500;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12pt;
+            margin: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover { background-color: #ff7f50; }
+    </style>
+</head>
+<body>
+    <div th:replace="fragments/menu :: menu"></div>
+    
+    <div class="phone-number">
+        고객센터: 02-123-4567
+    </div>
+</body>
+</html>

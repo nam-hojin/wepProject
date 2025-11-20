@@ -2,43 +2,177 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>질문 목록</title>
-   <link rel="stylesheet" type="text/css" th:href="@{/css/userList.css}">
+    <title>공지사항 목록</title>
+    <style>
+        /* ========================= */
+        /* 상단 네비게이션 고정      */
+        /* ========================= */
+        .top-nav-table {
+            width: 100%;
+            border-collapse: collapse;
+            padding: 10px 0;
+            table-layout: fixed;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #fff8dc;
+            z-index: 1000;
+        }
+
+        .top-nav-table td a {
+            font-size: 10pt;
+            text-decoration: none;
+            color: black;
+            padding: 0;
+        }
+
+        .top-nav-table td a:hover { color: yellow; }
+
+        .top-nav-table .left { text-align: left; padding-left: 10px; }
+        .top-nav-table .center { text-align: center; font-weight: bold; font-size: 18px; }
+        .top-nav-table .right { text-align: right; padding-right: 10px; }
+        .top-nav-table .right a { font-size: 5pt; margin: 0 5px; letter-spacing: -1px; white-space: nowrap; }
+
+        /* ========================= */
+        /* 메인 네비게이션 고정      */
+        /* ========================= */
+        .main-nav-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            position: fixed;
+            top: 50px; /* 상단 메뉴 아래 위치 */
+            left: 0;
+            background-color: #fff8dc;
+            z-index: 999;
+        }
+
+        .main-nav-table td { width: 16.66%; }
+
+        .main-nav-table td a {
+            display: block;
+            padding: 5px 0;
+            text-decoration: none;
+            color: black;
+        }
+
+        .main-nav-table td a:hover { color: yellow; }
+
+        /* ========================= */
+        /* 본문 패딩 확보            */
+        /* ========================= */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff8dc;
+            text-align: center;
+            padding-top: 90px; /* 상단 + 메인 메뉴 높이 확보 */
+        }
+
+        /* ========================= */
+        /* 페이지 타이틀             */
+        /* ========================= */
+        #page-title {
+            color: #ff4500;
+            margin-bottom: 20px;
+        }
+
+        /* ========================= */
+        /* 공지사항 테이블 스타일     */
+        /* ========================= */
+        #notice-table {
+            width: 90%;
+            margin: 0 auto 30px auto;
+            border-collapse: collapse;
+            background-color: #fff5e6;
+            border: 2px solid #ffa500;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #notice-table th, #notice-table td {
+            border: 1px solid #ffa500;
+            padding: 8px 12px;
+            text-align: center;
+        }
+
+        #notice-table th {
+            background-color: #ffdab9;
+            font-weight: bold;
+        }
+
+        #notice-table tr:nth-child(even) { background-color: #fff0d4; }
+        #notice-table tr:hover { background-color: #ffe4b5; }
+
+        #notice-table a {
+            text-decoration: none;
+            color: black;
+        }
+
+        #notice-table a:hover { color: #ff4500; }
+
+        /* ========================= */
+        /* 버튼 스타일               */
+        /* ========================= */
+        button {
+            padding: 8px 15px;
+            background-color: #ff4500;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12pt;
+            margin: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover { background-color: #ff7f50; }
+    </style>
 </head>
 <body>
 
-    <h1 id="page-title">질문 목록</h1>
+<div th:replace="fragments/menu :: menu"></div>
 
-    <table border="1" id="question-table">
-        <thead>
-            <tr>
-                <th id="th-number">번호</th>
-                <th id="th-title">제목</th>
-                <th id="th-writer">작성자</th>
-                <th id="th-date">작성일</th>
-            </tr>
-        </thead>
-        <tbody id="question-tbody">
-            <tr th:each="question : ${questionList}" id="question-row">
-                <td th:text="${question.postId}" class="question-id"></td>
-                <td>
-                    <a th:href="@{'/question.eo/detail.eo/' + ${question.postId}}" 
-                       th:text="${question.title}" class="question-title"></a>
-                </td>
-                <td th:text="${question.writer}" class="question-writer"></td>
-                <td th:text="${#dates.format(question.createdAt, 'yyyy-MM-dd HH:mm')}" class="question-date"></td>
-            </tr>
-        </tbody>
-    </table>
-    <br>
+<h1 id="page-title">공지사항</h1>
 
-    <div th:if="${session.loginUser != null and session.loginUser.role.equalsIgnoreCase('ADMIN')}" id="admin-actions">
-        <button id="create-question-btn" onclick="location.href='/question.eo/create.eo'">질문 작성</button>
-    </div>
+<table border="1" id="notice-table">
+    <thead>
+        <tr>
+            <th id="th-number">번호</th>
+            <th id="th-title">제목</th>
+            <th id="th-writer">작성자</th>
+            <th id="th-date">작성일</th>
+        </tr>
+    </thead>
 
-    <a th:href="@{/main.to}">
-        <button id="home-btn">홈으로</button>
-    </a>
+    <tbody id="notice-tbody">
+        <tr th:each="notice : ${noticeList}" id="notice-row">
+            <td th:text="${notice.postId}" class="notice-id"></td>
+
+            <td>
+                <!-- 상세보기는 모두 접근 가능 -->
+                <a th:href="@{'/notice.do/detail.do/' + ${notice.postId}}"
+                   th:text="${notice.title}"
+                   class="notice-title"></a>
+            </td>
+
+            <td th:text="${notice.writer}" class="notice-writer"></td>
+
+            <td th:text="${#dates.format(notice.createdAt, 'yyyy-MM-dd HH:mm')}" 
+                class="notice-date"></td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- 관리자만 글쓰기 버튼 보이게 -->
+<div th:if="${session.loginUser != null and session.loginUser.role.equalsIgnoreCase('ADMIN')}" 
+     id="admin-actions">
+    <button id="create-notice-btn" 
+            onclick="location.href='/notice.do/create.do'">작성</button>
+</div>
+
+<a th:href="@{/main.to}">
+    <button id="home-btn">홈으로</button>
+</a>
 
 </body>
 </html>

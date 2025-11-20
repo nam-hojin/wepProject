@@ -32,7 +32,7 @@
 						    <a th:href="@{/logout.to}">로그아웃</a>
 						    <a th:href="@{/update.to}">회원수정</a>
 						    <a th:href="@{/delete.to}">회원탈퇴</a>
-						    <a href="#">장바구니</a>
+						    <a th:href="@{/cart}">장바구니</a>
 						</span>
 
 </span>
@@ -45,7 +45,8 @@
                         <a th:href="@{/addUI.to}">회원가입</a>
                     </span>
 
-                    <a href="#">고객센터</a>
+                    <a th:href="@{/customer.ko}">고객센터</a>
+
                 </td>
             </tr>
         </table>
@@ -53,10 +54,13 @@
         <!-- 메인 메뉴 -->
         <table class="main-nav-table">
             <tr>
-                <td><a href="#">과일 목록</a></td>
+                <td><a th:href="@{/admin/products.fo}">상품 목록</a></td>
                 <td><a th:href="@{/notice.do}">공지사항</a></td>
                 <td><a th:href="@{/question.eo}">문의사항</a></td>
-                <td><a href="#">리뷰게시판</a></td>
+                <td><a th:href="@{/reviews.go}">리뷰게시판</a></td>
+                <td><a th:href="@{/JuiceRecipes.ko}">주스 레시피</a></td>
+                <td><a th:href="@{/Health.ko}">비타민 건강정보</a></td>
+
             </tr>
         </table>
 

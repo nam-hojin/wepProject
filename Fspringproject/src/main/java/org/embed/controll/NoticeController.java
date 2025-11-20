@@ -25,13 +25,13 @@ public class NoticeController {
         this.noticeService = noticeService;
     }
 
-    /** 루트 접근 시 목록 페이지로 리다이렉트 */
+    /** 루트 접근 시 목록 페이지 */
     @GetMapping
     public String redirectToList() {
         return "redirect:/notice.do/list.do";
     }
 
-    /** 1. 공지 목록 페이지 */
+    /** 1. 공지 목록 */
     @GetMapping("/list.do")
     public String noticeList(Model model) throws Exception {
         List<NoticeDTO> list = noticeService.getNoticeList();
@@ -39,7 +39,7 @@ public class NoticeController {
         return "notice/noticeList";
     }
 
-    /** 2. 공지 상세 페이지 */
+    /** 2. 공지 상세 */
     @GetMapping("/detail.do/{postId}")
     public String noticeDetail(@PathVariable("postId") int postId, Model model) throws Exception {
         NoticeDTO notice = noticeService.getNoticeDetail(postId);
@@ -47,7 +47,7 @@ public class NoticeController {
         return "notice/noticeDetail";
     }
 
-    /** 3. 공지 작성 페이지 (관리자만 접근 가능) */
+    /** 3. 공지 작성 페이지 (ADMIN) */
     @GetMapping("/create.do")
     public String createForm(HttpSession session, Model model) {
         UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
@@ -65,7 +65,7 @@ public class NoticeController {
         return "notice/noticeCreate";
     }
 
-    /** 3-2. 공지 등록 처리 (관리자만 가능) */
+    /** 3-2. 공지 등록 처리 */
     @PostMapping("/create.do")
     public String createNotice(@ModelAttribute NoticeDTO notice, HttpSession session, Model model) throws Exception {
         UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
@@ -75,14 +75,13 @@ public class NoticeController {
             return "redirect:/notice.do/list.do";
         }
 
-        // 로그인한 관리자 이름을 작성자로 설정
         notice.setWriter(loginUser.getName());
-
         noticeService.createNotice(notice);
+
         return "redirect:/notice.do/list.do";
     }
 
-    /** 4. 공지 수정 페이지 (관리자만 접근 가능) */
+    /** 4. 공지 수정 페이지 */
     @GetMapping("/update.do/{postId}")
     public String updateForm(@PathVariable("postId") int postId, HttpSession session, Model model) throws Exception {
         UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
@@ -94,10 +93,11 @@ public class NoticeController {
 
         NoticeDTO notice = noticeService.getNoticeDetail(postId);
         model.addAttribute("notice", notice);
+
         return "notice/noticeUpdate";
     }
 
-    /** 4-2. 공지 수정 처리 (관리자만 가능) */
+    /** 4-2. 공지 수정 처리 */
     @PostMapping("/update.do")
     public String updateNotice(@ModelAttribute NoticeDTO notice, HttpSession session, Model model) throws Exception {
         UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
@@ -107,14 +107,13 @@ public class NoticeController {
             return "redirect:/notice.do/list.do";
         }
 
-        // 작성자 이름 업데이트 (필요 없으면 생략 가능)
         notice.setWriter(loginUser.getName());
-
         noticeService.updateNotice(notice);
+
         return "redirect:/notice.do/detail.do/" + notice.getPostId();
     }
 
-    /** 5. 공지 삭제 (관리자만 가능) */
+    /** 5. 공지 삭제 */
     @GetMapping("/delete.do/{postId}")
     public String deleteNotice(@PathVariable("postId") int postId, HttpSession session, Model model) throws Exception {
         UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
@@ -127,8 +126,5 @@ public class NoticeController {
         noticeService.deleteNotice(postId);
         return "redirect:/notice.do/list.do";
     }
-    @GetMapping("/main.to") 
-    public String mainPage() {
-        return "main"; // main.html 뷰
-    }
+
 }

@@ -5,41 +5,48 @@
 
 <mapper namespace="org.embed.mapper.ProductMapper">
 
-    <!-- 전체 조회 -->
-    <select id="selectAll" resultType="org.embed.dto.ProductDTO">
-        SELECT * FROM product ORDER BY product_id DESC
-    </select>
+	<!-- 전체 조회 -->
+	<select id="selectAll" resultType="org.embed.dto.ProductDTO">
+		SELECT * FROM product ORDER BY product_id DESC
+	</select>
 
-    <!-- 단일 조회 -->
-    <select id="selectById" parameterType="int" resultType="org.embed.dto.ProductDTO">
-        SELECT * FROM product WHERE product_id = #{productId}
-    </select>
+	<!-- 단일 조회 -->
+	<select id="selectById" parameterType="int"
+		resultType="org.embed.dto.ProductDTO">
+		SELECT * FROM product WHERE product_id = #{productId}
+	</select>
 
-    <!-- 등록 -->
-    <insert id="insertProduct" parameterType="org.embed.dto.ProductDTO" useGeneratedKeys="true" keyProperty="productId">
-        INSERT INTO product
-        (name, category, price, stock, description, image_url, created_at, updated_at)
-        VALUES
-        (#{name}, #{category}, #{price}, #{stock}, #{description}, #{imageUrl}, NOW(), NOW())
-    </insert>
+	<!-- 등록 -->
+	<insert id="insertProduct"
+		parameterType="org.embed.dto.ProductDTO" useGeneratedKeys="true"
+		keyProperty="productId">
+		INSERT INTO product
+		(name, category, price, stock, description, image_url, created_at,
+		updated_at)
+		VALUES
+		(#{name}, #{category}, #{price}, #{stock}, #{description}, #{imageUrl}, NOW(),
+		NOW())
+	</insert>
 
-    <!-- 수정 (모든 컬럼 업데이트) -->
-    <update id="updateProduct" parameterType="org.embed.dto.ProductDTO">
-        UPDATE product
-        SET 
-            name = #{name},
-            category = #{category},
-            price = #{price},
-            stock = #{stock},
-            description = #{description},
-            image_url = #{imageUrl},
-            updated_at = NOW()
-        WHERE product_id = #{productId}
-    </update>
 
-    <!-- 삭제 -->
-    <delete id="deleteProduct" parameterType="int">
-        DELETE FROM product WHERE product_id = #{productId}
-    </delete>
+	<!-- 수정 (모든 컬럼 업데이트) -->
+	<update id="updateProduct"
+		parameterType="org.embed.dto.ProductDTO">
+		UPDATE product
+		SET
+		name = #{name},
+		category = #{category},
+		price = #{price},
+		stock = #{stock},
+		description = #{description},
+		image_url = #{imageUrl},
+		updated_at = NOW()
+		WHERE product_id = #{productId}
+	</update>
+
+	<!-- 삭제 -->
+	<delete id="deleteProduct" parameterType="int">
+		DELETE FROM product WHERE product_id = #{productId}
+	</delete>
 
 </mapper>

@@ -1,0 +1,33 @@
+<div class="review">
+    <p><strong>작성자:</strong> <span th:text="${review.userName}"></span></p>
+    <p><strong>작성일:</strong> <span th:text="${review.createdAt}"></span></p>
+    <p><strong>내용:</strong> <span th:text="${review.content}"></span></p>
+</div>
+
+<h2>댓글</h2>
+<div th:if="${#lists.isEmpty(review.replies)}">
+    <p>등록된 댓글이 없습니다.</p>
+</div>
+<div th:each="reply : ${review.replies}" class="reply">
+    <p><strong th:text="${reply.userName}"></strong> (<span th:text="${reply.createdAt}"></span>)</p>
+    <p th:text="${reply.content}"></p>
+    <a th:href="@{'/reply/delete/' + ${review.id} + '/' + ${reply.id} + '.go'}">삭제</a>
+</div>
+
+<h2>댓글 작성</h2>
+<form th:action="@{/reply/create5.go}" th:object="${newReply}" method="post">
+    <!-- reviewId를 hidden으로 전달 -->
+    <input type="hidden" name="reviewId" th:value="${review.id}" />
+
+    <label>작성자:
+        <input type="text" th:field="*{userName}" required />
+    </label>
+
+    <label>내용:
+        <textarea th:field="*{content}" required></textarea>
+    </label>
+
+    <button type="submit">댓글 작성</button>
+</form>
+
+<a th:href="@{/reviews.go}">리뷰 목록으로 돌아가기</a>
