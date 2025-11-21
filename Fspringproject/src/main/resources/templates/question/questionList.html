@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>자주하는 질문</title>
+    <style>
+        /* ========================= */
+        /* 상단 네비게이션 고정      */
+        /* ========================= */
+        .top-nav-table {
+            width: 100%;
+            border-collapse: collapse;
+            padding: 10px 0;
+            table-layout: fixed;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #fff8dc;
+            z-index: 1000;
+        }
+
+        .top-nav-table td {
+            border: none; /* 선 제거 */
+        }
+
+        .top-nav-table td a {
+            font-size: 10pt;
+            text-decoration: none;
+            color: black;
+            padding: 0;
+        }
+
+        .top-nav-table td a:hover { color: yellow; }
+
+        .top-nav-table .left { text-align: left; padding-left: 10px; }
+        .top-nav-table .center { text-align: center; font-weight: bold; font-size: 18px; }
+        .top-nav-table .right { text-align: right; padding-right: 10px; }
+        .top-nav-table .right a { font-size: 5pt; margin: 0 5px; letter-spacing: -1px; white-space: nowrap; }
+
+        /* ========================= */
+        /* 메인 네비게이션 고정      */
+        /* ========================= */
+        .main-nav-table {
+            width: 100%;
+            text-align: center;
+            position: fixed;
+            top: 50px;
+            left: 0;
+            background-color: #fff8dc;
+            z-index: 999;
+            border-collapse: collapse;
+        }
+
+        .main-nav-table td {
+            width: 16.66%;
+            border: none; /* 선 제거 */
+        }
+
+        .main-nav-table td a {
+            display: block;
+            padding: 5px 0;
+            text-decoration: none;
+            color: black;
+        }
+
+        .main-nav-table td a:hover { color: yellow; }
+
+        /* ========================= */
+        /* 본문 패딩 확보            */
+        /* ========================= */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff8dc;
+            text-align: center;
+            padding-top: 90px; /* 상단 + 메인 메뉴 높이 확보 */
+        }
+
+        /* ========================= */
+        /* 페이지 타이틀             */
+        /* ========================= */
+        #page-title {
+            color: #ff4500;
+            margin-bottom: 20px;
+        }
+
+        /* ========================= */
+        /* 질문 테이블 스타일        */
+        /* ========================= */
+        #question-table {
+            width: 90%;
+            margin: 0 auto 30px auto;
+            border-collapse: collapse;
+            background-color: #fff5e6;
+            border: 2px solid #ffa500;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #question-table th, #question-table td {
+            border: 1px solid #ffa500;
+            padding: 8px 12px;
+            text-align: center;
+        }
+
+        #question-table th {
+            background-color: #ffdab9;
+            font-weight: bold;
+        }
+
+        #question-table tr:nth-child(even) { background-color: #fff0d4; }
+        #question-table tr:hover { background-color: #ffe4b5; }
+
+        #question-table a {
+            text-decoration: none;
+            color: black;
+        }
+
+        #question-table a:hover { color: #ff4500; }
+
+        /* ========================= */
+        /* 버튼 스타일               */
+        /* ========================= */
+        button {
+            padding: 8px 15px;
+            background-color: #ff4500;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12pt;
+            margin: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover { background-color: #ff7f50; }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/menu :: menu"></div>
+
+<h1 id="page-title">자주하는 질문</h1>
+
+<table border="1" id="question-table">
+    <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>조회수</th>
+            <th>작성일</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="question : ${questionList}">
+            <td th:text="${question.postId}"></td>
+            <td>
+                <a th:href="@{'/question.eo/detail.eo/' + ${question.postId}}"
+                   th:text="${question.title}"></a>
+            </td>
+            <td th:text="${question.writer}"></td>
+            <td th:text="${question.viewCount}"></td>
+            <td th:text="${#dates.format(question.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- 관리자만 글쓰기 버튼 -->
+<div th:if="${session.loginUser != null and session.loginUser.role.equalsIgnoreCase('ADMIN')}">
+    <button onclick="location.href='/question.eo/create.eo'">글쓰기</button>
+</div>
+
+<button onclick="location.href='/main.to'">홈으로</button>
+</body>
+</html>

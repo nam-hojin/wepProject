@@ -1,78 +1,71 @@
-.top-nav-table td a,
-.main-nav-table td a {
-    font-size: 10pt;
-    text-decoration: none;
-    color: black;
-    padding: 0;
-}
-
-.top-nav-table td a:hover,
-.main-nav-table td a:hover {
-    color: yellow;
-}
-
 /* ========================= */
-/* 상단 네비게이션           */
+/* 상단 네비게이션 고정      */
 /* ========================= */
 .top-nav-table {
     width: 100%;
     border-collapse: collapse;
     padding: 10px 0;
     table-layout: fixed;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #fff8dc;
+    z-index: 1000;
 }
 
-.top-nav-table .left {
-    text-align: left;
-    padding-left: 10px;
+.top-nav-table td a {
+    font-size: 10pt;
+    text-decoration: none;
+    color: black;
+    padding: 0;
 }
 
-.top-nav-table .center {
-    text-align: center;
-    font-weight: bold;
-    font-size: 18px;
+.top-nav-table td a:hover {
+    color: yellow;
 }
 
-.top-nav-table .right {
-    text-align: right;
-    padding-right: 10px;
-}
-
-.top-nav-table .right a {
-    font-size: 5pt;
-    margin: 0 5px;
-    letter-spacing: -1px;
-    white-space: nowrap;
-}
+.top-nav-table .left { text-align: left; padding-left: 10px; }
+.top-nav-table .center { text-align: center; font-weight: bold; font-size: 18px; }
+.top-nav-table .right { text-align: right; padding-right: 10px; }
+.top-nav-table .right a { font-size: 5pt; margin: 0 5px; letter-spacing: -1px; white-space: nowrap; }
 
 /* ========================= */
-/* 메인 네비게이션           */
+/* 메인 네비게이션 고정      */
 /* ========================= */
 .main-nav-table {
     width: 100%;
     border-collapse: collapse;
     text-align: center;
+    position: fixed;
+    top: 50px; /* 상단 메뉴 아래 위치 */
+    left: 0;
+    background-color: #fff8dc;
+    z-index: 999;
 }
 
 .main-nav-table td {
-    width: 25%;
+    width: 16.66%; /* 6개 메뉴 기준 */
 }
 
 .main-nav-table td a {
     display: block;
     padding: 5px 0;
+    text-decoration: none;
+    color: black;
+}
+
+.main-nav-table td a:hover {
+    color: yellow;
 }
 
 /* ========================= */
-/* 본문 스타일               */
+/* 본문 패딩 확보            */
 /* ========================= */
 body {
     font-family: Arial, sans-serif;
     background-color: #fff8dc;
     text-align: center;
-}
-
-h1 {
-    color: #ff4500;
+    padding-top: 90px; /* 상단 + 메인 메뉴 높이 확보 */
 }
 
 /* ========================= */
@@ -95,12 +88,16 @@ h1 {
 }
 
 .fruit img {
-    width: 100px;
-    height: 100px;
+    width: 100px;           /* 기본 너비 */
+    height: 100px;          /* 기본 높이 */
+    max-width: 100%;        /* 컨테이너보다 크지 않도록 제한 */
+    max-height: 100%;       /* 컨테이너보다 크지 않도록 제한 */
+    object-fit: contain;    /* 비율 유지 */
 }
-/* ===============================
-	회원가입 화면
-================================ */
+
+/* ========================= */
+/* 회원가입 화면             */
+/* ========================= */
 .signup-form {
     width: 400px;
     margin: 50px auto;
@@ -119,14 +116,14 @@ h1 {
 
 .signup-form div {
     display: flex;
-    justify-content: flex-end; /* 오른쪽 정렬 */
+    justify-content: flex-end;
     align-items: center;
     margin-bottom: 15px;
 }
 
 .signup-form label {
     width: 100px;
-    text-align: right; /* 라벨 텍스트 오른쪽 정렬 */
+    text-align: right;
     margin-right: 10px;
     font-weight: bold;
 }
@@ -135,7 +132,7 @@ h1 {
 .signup-form input[type="password"],
 .signup-form input[type="email"],
 .signup-form input[type="date"] {
-    flex: 1; /* 남은 공간 채움 */
+    flex: 1;
     padding: 8px 10px;
     border: 1px solid #ffa500;
     border-radius: 5px;
@@ -163,32 +160,33 @@ h1 {
 }
 
 /* ========================= */
-/* 푸터 스타일               */
+/* 푸터 고정형               */
 /* ========================= */
-.footer-divider {
-    border-top: 2px solid #000;
-    margin: 0;
-}
-
 .footer {
     background-color: #f8f8f8;
     height: 25px;
     font-size: 5pt;
     overflow: hidden;
     padding: 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
 }
 
-.footer-table {
-    table-layout: fixed;
-    height: 100%;
+.footer-divider {
+    border-top: 2px solid #000;
     margin: 0;
 }
 
-.footer-cell {
-    text-align: left;
-    vertical-align: middle;
-    padding: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+/* ========================= */
+/* 모든 이미지 기본 제한      */
+/* ========================= */
+img {
+    max-width: 150px;
+    max-height: 150px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
 }

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>리뷰 목록</title>
+    <style>
+        /* ========================= */
+        /* 상단 네비게이션 고정      */
+        /* ========================= */
+        .top-nav-table {
+            width: 100%;
+            border-collapse: collapse;
+            padding: 10px 0;
+            table-layout: fixed;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #fff8dc;
+            z-index: 1000;
+        }
+
+        .top-nav-table td {
+            border: none;
+        }
+
+        .top-nav-table td a {
+            font-size: 10pt;
+            text-decoration: none;
+            color: black;
+            padding: 0;
+        }
+
+        .top-nav-table td a:hover { color: yellow; }
+
+        .top-nav-table .left { text-align: left; padding-left: 10px; }
+        .top-nav-table .center { text-align: center; font-weight: bold; font-size: 18px; }
+        .top-nav-table .right { text-align: right; padding-right: 10px; }
+        .top-nav-table .right a { font-size: 5pt; margin: 0 5px; letter-spacing: -1px; white-space: nowrap; }
+
+        /* ========================= */
+        /* 메인 네비게이션 고정      */
+        /* ========================= */
+        .main-nav-table {
+            width: 100%;
+            text-align: center;
+            position: fixed;
+            top: 50px;
+            left: 0;
+            background-color: #fff8dc;
+            z-index: 999;
+            border-collapse: collapse;
+        }
+
+        .main-nav-table td {
+            width: 16.66%;
+            border: none;
+        }
+
+        .main-nav-table td a {
+            display: block;
+            padding: 5px 0;
+            text-decoration: none;
+            color: black;
+        }
+
+        .main-nav-table td a:hover { color: yellow; }
+
+        /* ========================= */
+        /* 본문 패딩 확보            */
+        /* ========================= */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff8dc;
+            text-align: center;
+            padding-top: 90px; /* 상단 + 메인 메뉴 높이 확보 */
+            margin: 0;
+        }
+
+        /* ========================= */
+        /* 페이지 타이틀             */
+        /* ========================= */
+        #page-title {
+            color: #ff4500;
+            margin-bottom: 20px;
+        }
+
+        /* ========================= */
+        /* 리뷰 / 답변 영역 스타일   */
+        /* ========================= */
+        .review {
+            width: 90%;
+            margin: 0 auto 20px auto;
+            padding: 15px;
+            background-color: #fff5e6;
+            border: 2px solid #ffa500;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .review-header, .reply-header {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .review-content, .reply-content {
+            margin-bottom: 10px;
+        }
+
+        .review-actions a, .reply a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: black;
+        }
+
+        .review-actions a:hover, .reply a:hover {
+            color: #ff4500;
+        }
+
+        .reply {
+            margin-left: 20px;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #fff0d4;
+            border-left: 3px solid #ffa500;
+            border-radius: 5px;
+        }
+
+        /* ========================= */
+        /* 버튼 스타일               */
+        /* ========================= */
+        button, a.button-link {
+            padding: 8px 15px;
+            background-color: #ff4500;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12pt;
+            margin: 5px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        button:hover, a.button-link:hover {
+            background-color: #ff7f50;
+        }
+
+        hr {
+            border: 1px solid #ffa500;
+        }
+    </style>
+</head>
+<body>
+    <!-- 상단 메뉴 -->
+    <div th:replace="fragments/menu :: menu"></div>
+
+    <h1 id="page-title">리뷰 목록</h1>
+    <a th:href="@{/create.go}" class="button-link">리뷰 작성</a>
+    <hr/>
+
+    <div th:each="review : ${reviews}" class="review">
+        <div class="review-header">
+            <span th:text="${review.userName}">작성자 이름</span>
+            (ID: <span th:text="${review.userId}">0</span>) — 
+            <span th:text="${review.createdAt}">작성일</span>
+        </div>
+        <div class="review-content" th:text="${review.content}">내용</div>
+        <div class="review-actions">
+             <a th:href="@{'/review/' + ${review.id} + '.go'}">상세보기</a>
+            <a th:href="@{/edit1/{id}.go(id=${review.id})}">수정</a>
+            <a th:href="@{/delete/{id}.go(id=${review.id})}">삭제</a>
+        </div>
+
+        <div th:each="reply : ${review.replies}" class="reply">
+            <div class="reply-header">
+                <span th:text="${reply.userName}">답변자</span>
+                (ID: <span th:text="${reply.userId}">0</span>) — 
+                <span th:text="${reply.createdAt}">시간</span>
+            </div>
+            <div class="reply-content" th:text="${reply.content}">답변 내용</div>
+            <div>
+                <a th:href="@{/reply/delete/{reviewId}/{replyId}.go(reviewId=${review.id}, replyId=${reply.id})}">
+                    답변 삭제
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

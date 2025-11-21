@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.embed.mapper.OrderMapper">
+
+    <!-- 주문 저장 -->
+    <insert id="insertOrder" useGeneratedKeys="true" keyProperty="orderId">
+        INSERT INTO orders 
+            (user_id, recipient_name, address, phone, total_price, order_date)
+        VALUES 
+            (#{userId}, 
+             <!-- recipient_name 기본값 처리 -->
+             <choose>
+                 <when test="recipientName != null and recipientName != ''">
+                     #{recipientName}
+                 </when>
+                 <otherwise>
+                     '미입력'
+                 </otherwise>
+             </choose>,
+             <!-- address 기본값 처리 -->
+             <choose>
+                 <when test="address != null and address != ''">
+                     #{address}
+                 </when>
+                 <otherwise>
+                     '미입력 주소'
+                 </otherwise>
+             </choose>,
+             <!-- phone 기본값 처리 -->
+             <choose>
+                 <when test="phone != null and phone != ''">
+                     #{phone}
+                 </when>
+                 <otherwise>
+                     '010-0000-0000'
+                 </otherwise>
+             </choose>,
+             #{totalPrice}, #{orderDate})
+    </insert>
+
+    <!-- 주문 아이템 저장 -->
+    <insert id="insertOrderItem" useGeneratedKeys="true" keyProperty="orderItemId">
+        INSERT INTO order_items 
+            (order_id, product_id, quantity, price, created_at, updated_at)
+        VALUES 
+            (#{orderId}, #{productId}, #{quantity}, #{price}, #{createdAt}, #{updatedAt})
+    </insert>
+
+</mapper>

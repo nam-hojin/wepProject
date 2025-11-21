@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 상세</title>
+    <style>
+        /* ========================= */
+        /* 상단 네비게이션 고정      */
+        /* ========================= */
+        .top-nav-table {
+            width: 100%;
+            border-collapse: collapse;
+            padding: 10px 0;
+            table-layout: fixed;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #fff8dc;
+            z-index: 1000;
+        }
+
+        .top-nav-table td a {
+            font-size: 10pt;
+            text-decoration: none;
+            color: black;
+            padding: 0;
+        }
+
+        .top-nav-table td a:hover { color: yellow; }
+
+        .top-nav-table .left { text-align: left; padding-left: 10px; }
+        .top-nav-table .center { text-align: center; font-weight: bold; font-size: 18px; }
+        .top-nav-table .right { text-align: right; padding-right: 10px; }
+        .top-nav-table .right a { font-size: 5pt; margin: 0 5px; letter-spacing: -1px; white-space: nowrap; }
+
+        /* ========================= */
+        /* 메인 네비게이션 고정      */
+        /* ========================= */
+        .main-nav-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            position: fixed;
+            top: 50px; /* 상단 메뉴 아래 위치 */
+            left: 0;
+            background-color: #fff8dc;
+            z-index: 999;
+        }
+
+        .main-nav-table td { width: 16.66%; }
+
+        .main-nav-table td a {
+            display: block;
+            padding: 5px 0;
+            text-decoration: none;
+            color: black;
+        }
+
+        .main-nav-table td a:hover { color: yellow; }
+
+        /* ========================= */
+        /* 본문 패딩 확보            */
+        /* ========================= */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff8dc;
+            text-align: center;
+            padding-top: 90px; /* 상단 + 메인 메뉴 높이 확보 */
+        }
+
+        /* ========================= */
+        /* 페이지 타이틀             */
+        /* ========================= */
+        #page-title {
+            color: #ff4500;
+            margin-bottom: 20px;
+        }
+
+        /* ========================= */
+        /* 상품 상세 테이블 스타일    */
+        /* ========================= */
+        #product-table {
+            width: 90%;
+            margin: 0 auto 30px auto;
+            border-collapse: collapse;
+            background-color: #fff5e6;
+            border: 2px solid #ffa500;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #product-table th, #product-table td {
+            border: 1px solid #ffa500;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        #product-table th {
+            background-color: #ffdab9;
+            font-weight: bold;
+            width: 20%;
+        }
+
+        #product-table tr:nth-child(even) { background-color: #fff0d4; }
+        #product-table tr:hover { background-color: #ffe4b5; }
+
+        #product-table img {
+            max-width: 150px;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        /* ========================= */
+        /* 버튼 스타일               */
+        /* ========================= */
+        button, a.button-link {
+            padding: 8px 15px;
+            background-color: #ff4500;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12pt;
+            margin: 5px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        button:hover, a.button-link:hover { background-color: #ff7f50; }
+
+    </style>
+</head>
+<body>
+
+<!-- 상단 메뉴 -->
+<div th:replace="fragments/menu :: menu"></div>
+
+<h1 id="page-title">상품 상세</h1>
+
+<table id="product-table">
+    <tr>
+        <th>이미지</th>
+        <td>
+            <div th:if="${product.imageUrl != null}">
+                <img th:src="${product.imageUrl}" alt="상품 이미지"/>
+            </div>
+            <div th:if="${product.imageUrl == null}">
+                이미지 없음
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th>상품명</th>
+        <td th:text="${product.name}">상품명</td>
+    </tr>
+    <tr>
+        <th>카테고리</th>
+        <td th:text="${product.category}">카테고리</td>
+    </tr>
+    <tr>
+        <th>가격</th>
+        <td th:text="${product.price} + ' 원'">0 원</td>
+    </tr>
+    <tr>
+        <th>재고</th>
+        <td th:text="${product.stock} + ' 개'">0 개</td>
+    </tr>
+    <tr>
+        <th>설명</th>
+        <td th:text="${product.description}">설명</td>
+    </tr>
+    <tr>
+        <th>등록일</th>
+        <td th:text="${#temporals.format(product.createdAt, 'yyyy-MM-dd HH:mm')}">등록일</td>
+    </tr>
+    <tr>
+        <th>수정일</th>
+        <td th:text="${#temporals.format(product.updatedAt, 'yyyy-MM-dd HH:mm')}">수정일</td>
+    </tr>
+</table>
+
+<div>
+  <form th:action="@{/cart/add}" method="post">
+    <input type="hidden" name="productId" th:value="${product.productId}" />
+    <input type="hidden" name="quantity" value="1" />
+
+    <!-- _csrf가 있을 때만 hidden input 렌더링 -->
+    <input th:if="${_csrf != null}"
+           type="hidden"
+           th:name="${_csrf.parameterName}"
+           th:value="${_csrf.token}" />
+
+    <button type="submit">장바구니 담기</button>
+</form>
+
+    <a th:href="@{/admin/products.fo}" class="button-link">목록으로</a>
+</div>
+
+</body>
+</html>

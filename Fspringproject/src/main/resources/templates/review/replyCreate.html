@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>답변 작성</title>
+</head>
+<body>
+    <h1>답변 작성</h1>
+
+    <!-- 컨트롤러의 /reply/create5.go 에 매핑된 form -->
+    <form th:action="@{/reply/create5.go}" th:object="${newReply}" method="post">
+        <!-- reviewId 값을 hidden으로 전달 -->
+        <input type="hidden" th:field="*{reviewId}" th:value="${review.id}" />
+
+        <label>내용:
+            <textarea th:field="*{content}" placeholder="답변 내용을 작성하세요" required></textarea>
+        </label><br />
+
+        <button type="submit">등록</button>
+    </form>
+
+    <a th:href="@{/review/{id}.go(id=${review.id})}">취소</a>
+</body>
+</html>

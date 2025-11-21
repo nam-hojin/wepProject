@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>공지 상세</title>
+    <style>
+        /* ========================= */
+        /* 상단 네비게이션 고정      */
+        /* ========================= */
+        .top-nav-table {
+            width: 100%;
+            border-collapse: collapse;
+            padding: 10px 0;
+            table-layout: fixed;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #fff8dc;
+            z-index: 1000;
+        }
+
+        .top-nav-table td a {
+            font-size: 10pt;
+            text-decoration: none;
+            color: black;
+            padding: 0;
+        }
+
+        .top-nav-table td a:hover { color: yellow; }
+
+        .top-nav-table .left { text-align: left; padding-left: 10px; }
+        .top-nav-table .center { text-align: center; font-weight: bold; font-size: 18px; }
+        .top-nav-table .right { text-align: right; padding-right: 10px; }
+        .top-nav-table .right a { font-size: 5pt; margin: 0 5px; letter-spacing: -1px; white-space: nowrap; }
+
+        /* ========================= */
+        /* 메인 네비게이션 고정      */
+        /* ========================= */
+        .main-nav-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            position: fixed;
+            top: 50px; /* 상단 메뉴 아래 위치 */
+            left: 0;
+            background-color: #fff8dc;
+            z-index: 999;
+        }
+
+        .main-nav-table td { width: 16.66%; }
+
+        .main-nav-table td a {
+            display: block;
+            padding: 5px 0;
+            text-decoration: none;
+            color: black;
+        }
+
+        .main-nav-table td a:hover { color: yellow; }
+
+        /* ========================= */
+        /* 본문 패딩 확보            */
+        /* ========================= */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff8dc;
+            text-align: center;
+            padding-top: 90px; /* 상단 + 메인 메뉴 높이 확보 */
+            margin: 0;
+        }
+
+        /* ========================= */
+        /* 페이지 타이틀             */
+        /* ========================= */
+        #page-title {
+            color: #ff4500;
+            margin-bottom: 20px;
+        }
+
+        /* ========================= */
+        /* 상세 내용 스타일           */
+        /* ========================= */
+        .notice-detail {
+            width: 50%;
+            margin: 0 auto 30px auto;
+            padding: 20px;
+            background-color: #fff5e6;
+            border: 2px solid #ffa500;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 14pt;
+        }
+
+        .notice-detail p {
+            margin: 10px 0;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #ffa500; /* 구분선 */
+        }
+
+        .notice-detail p:last-child {
+            border-bottom: none;
+        }
+
+        .notice-detail span.label {
+            font-weight: bold;
+            display: inline-block;
+            width: 80px;
+        }
+
+        /* ========================= */
+        /* 버튼 스타일               */
+        /* ========================= */
+        button {
+            padding: 8px 15px;
+            background-color: #ff4500;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12pt;
+            margin: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover { background-color: #ff7f50; }
+    </style>
+</head>
+<body>
+
+<div th:replace="fragments/menu :: menu"></div>
+
+<h1 id="page-title">공지 상세</h1>
+
+<div class="notice-detail">
+    <p><span class="label">번호:</span> <span th:text="${notice.postId}"></span></p>
+    <p><span class="label">제목:</span> <span th:text="${notice.title}"></span></p>
+    <p><span class="label">내용:</span> <span th:text="${notice.content}"></span></p>
+    <p><span class="label">작성자:</span> <span th:text="${notice.writer}"></span></p>
+    <p><span class="label">작성일:</span> <span th:text="${#dates.format(notice.createdAt, 'yyyy-MM-dd HH:mm')}"></span></p>
+</div>
+
+<!-- 관리자만 수정/삭제 버튼 -->
+<div>
+    <span th:if="${session.loginUser != null and session.loginUser.role.equalsIgnoreCase('ADMIN')}">
+        <button th:onclick="'location.href=\'/notice.do/update.do/' + ${notice.postId} + '\';'">수정</button>
+        <button th:onclick="'location.href=\'/notice.do/delete.do/' + ${notice.postId} + '\';'"
+                onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
+    </span>
+    <button th:onclick="'location.href=\'/notice.do/list.do\';'">목록</button>
+</div>
+
+</body>
+</html>
