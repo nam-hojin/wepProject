@@ -1,52 +1,65 @@
 package org.embed.service;
 
-import java.util.List;
-
-import org.embed.dto.DeliveryInfoDTO;
+import org.embed.dto.CartDTO;
+import org.embed.dto.CartItemDTO;
 import org.embed.dto.OrderDTO;
 import org.embed.dto.OrderItemDTO;
+import org.embed.mapper.CartMapper;
 import org.embed.mapper.OrderMapper;
-import org.embed.service.OrderService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class OrderServiceImpl implements OrderService {
 
-    private final OrderMapper orderMapper;
+	private final OrderMapper orderMapper;
+	private final CartMapper cartMapper;
 
-    public OrderServiceImpl(OrderMapper orderMapper) {
-        this.orderMapper = orderMapper;
-    }
+	public OrderServiceImpl(OrderMapper orderMapper, CartMapper cartMapper) {
+		this.orderMapper = orderMapper;
+		this.cartMapper = cartMapper;
+	}
 
-    @Override
-    public void createOrder(List<DeliveryInfoDTO> deliveryList, Long userId) {
-        // 주문 DTO 생성
-        OrderDTO order = new OrderDTO();
-        order.setUserId(userId);
-        order.setOrderDate(java.time.LocalDateTime.now());
+	@Override
+	public void createOrder(Integer userId, String address) {
 
-        int total = 0;
-        List<OrderItemDTO> items = new java.util.ArrayList<>();
-        for (DeliveryInfoDTO dto : deliveryList) {
-            OrderItemDTO item = new OrderItemDTO();
-            item.setProductId(dto.getProductId());
-            item.setQuantity(dto.getQuantity());
-            item.setPrice(10000); // 예시 가격
-            item.setCreatedAt(java.time.LocalDateTime.now());
-            item.setUpdatedAt(java.time.LocalDateTime.now());
+		CartDTO cart = cartMapper.selectCartByUserId(userId);
+		if (cart == null || cart.getItems() == null || cart.getItems().isEmpty()) {
+			throw new IllegalStateException("장바구니가 비어있습니다.");
+		}
 
-            items.add(item);
-            total += item.getPrice() * item.getQuantity();
-        }
+		int total = cart.getItems().stream().mapToInt(i -> {
+			Integer price = orderMapper.getProductPrice(i.getProductId());
+			return (price != null ? price : 0) * i.getQuantity();
+		}).sum();
 
-        order.setItems(items);
-        order.setTotalPrice(total);
+		OrderDTO order = new OrderDTO();
+		order.setUserId(userId);
+		order.setAddress(address);
+		order.setTotalPrice(total);
 
-        // DB 저장
-        orderMapper.insertOrder(order);
-        for (OrderItemDTO item : items) {
-            item.setOrderId(order.getOrderId()); // FK
-            orderMapper.insertOrderItem(item);
-        }
-    }
+		orderMapper.insertOrder(order);
+
+		for (CartItemDTO item : cart.getItems()) {
+			Integer price = orderMapper.getProductPrice(item.getProductId());
+			if (price == null)
+				price = 0;
+
+			OrderItemDTO orderItem = new OrderItemDTO();
+			orderItem.setOrderId(order.getOrderId());
+			orderItem.setProductId(item.getProductId());
+			orderItem.setQuantity(item.getQuantity());
+			orderItem.setPrice(price);
+
+			orderMapper.insertOrderItem(orderItem);
+		}
+
+		cartMapper.deleteCartItems(cart.getCartId());
+	}
+
+	public boolean processPayment(OrderDTO order) {
+
+		return true;
+	}
 }

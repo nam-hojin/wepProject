@@ -1,162 +1,203 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>과일 주스 레시피</title>
-    <style>
-        /* ========================= */
-        /* 상단 메뉴 (고정 해제)      */
-        /* ========================= */
-        .top-nav-table {
-            width: 100%;
-            border-collapse: collapse;
-            table-layout: fixed;
-            background-color: #fff8dc;
-            padding: 10px 0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>과일 주스 레시피</title>
+<style>
+.top-nav-table {
+	width: 100%;
+	border-collapse: collapse;
+	table-layout: fixed;
+	background-color: #fff8dc;
+	padding: 10px 0;
+}
 
-        .top-nav-table td a {
-            text-decoration: none;
-            color: black;
-            font-size: 10pt;
-        }
+.top-nav-table td a {
+	text-decoration: none;
+	color: black;
+	font-size: 10pt;
+}
 
-        .top-nav-table td a:hover { color: yellow; }
+.top-nav-table td a:hover {
+	color: yellow;
+}
 
-        .top-nav-table .left { text-align: left; padding-left: 10px; }
-        .top-nav-table .center { text-align: center; font-weight: bold; font-size: 18px; }
-        .top-nav-table .right { text-align: right; padding-right: 10px; }
-        .top-nav-table .right a { font-size: 5pt; margin: 0 5px; letter-spacing: -1px; white-space: nowrap; }
+.top-nav-table .left {
+	text-align: left;
+	padding-left: 10px;
+}
 
-        /* ========================= */
-        /* 메인 메뉴 (고정 해제)      */
-        /* ========================= */
-        .main-nav-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: center;
-            background-color: #fff8dc;
-        }
+.top-nav-table .center {
+	text-align: center;
+	font-weight: bold;
+	font-size: 18px;
+}
 
-        .main-nav-table td { width: 16.66%; }
-        .main-nav-table td a {
-            display: block;
-            padding: 5px 0;
-            text-decoration: none;
-            color: black;
-        }
+.top-nav-table .right {
+	text-align: right;
+	padding-right: 10px;
+}
 
-        .main-nav-table td a:hover { color: yellow; }
+.top-nav-table .right a {
+	font-size: 5pt;
+	margin: 0 5px;
+	letter-spacing: -1px;
+	white-space: nowrap;
+}
 
-        /* ========================= */
-        /* 본문 패딩                 */
-        /* ========================= */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fff8dc;
-            text-align: center;
-            padding-top: 0; /* 메뉴 고정 없음 */
-            margin: 0;
-        }
+.main-nav-table {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: center;
+	background-color: #fff8dc;
+}
 
-        /* ========================= */
-        /* 본문 제목                 */
-        /* ========================= */
-        h1 {
-            color: #ff4500;
-            margin: 20px 0;
-        }
+.main-nav-table td {
+	width: 16.66%;
+}
 
-        /* ========================= */
-        /* 주스 카드 스타일          */
-        /* ========================= */
-        .juice-card {
-            width: 90%;
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff5e6;
-            border: 2px solid #ffa500;
-            border-radius: 10px;
-            text-align: left;
-            box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
-        }
+.main-nav-table td a {
+	display: block;
+	padding: 5px 0;
+	text-decoration: none;
+	color: black;
+}
 
-        .juice-card h2 {
-            color: #ff4500;
-            margin-top: 0;
-        }
+.main-nav-table td a:hover {
+	color: yellow;
+}
 
-        .juice-card .section-title {
-            font-weight: bold;
-            color: #ff7f50;
-        }
+body {
+	font-family: Arial, sans-serif;
+	background-color: #fff8dc;
+	text-align: center;
+	padding-top: 0;
+	margin: 0;
+}
 
-        .juice-card p { margin: 10px 0; }
-        .juice-card p.tip { font-style: italic; color: #333; }
+h1 {
+	color: #ff4500;
+	margin: 20px 0;
+}
 
-        /* ========================= */
-        /* 버튼 스타일               */
-        /* ========================= */
-        button {
-            padding: 8px 15px;
-            background-color: #ff4500;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12pt;
-            margin: 5px;
-            transition: background-color 0.3s;
-        }
+.juice-card {
+	width: 90%;
+	max-width: 600px;
+	margin: 20px auto;
+	padding: 20px;
+	background-color: #fff5e6;
+	border: 2px solid #ffa500;
+	border-radius: 10px;
+	text-align: left;
+	box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+}
 
-        button:hover { background-color: #ff7f50; }
+.juice-card h2 {
+	color: #ff4500;
+	margin-top: 0;
+}
 
-        /* ========================= */
-        /* 링크 스타일               */
-        /* ========================= */
-        a { text-decoration: none; color: black; }
-        a:hover { color: #ff4500; }
+.juice-card .section-title {
+	font-weight: bold;
+	color: #ff7f50;
+}
 
-       
+.juice-card p {
+	margin: 10px 0;
+}
 
-    </style>
+.juice-card p.tip {
+	font-style: italic;
+	color: #333;
+}
+
+button {
+	padding: 8px 15px;
+	background-color: #ff4500;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 12pt;
+	margin: 5px;
+	transition: background-color 0.3s;
+}
+
+button:hover {
+	background-color: #ff7f50;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+a:hover {
+	color: #ff4500;
+}
+</style>
 </head>
 <body>
 
-    <!-- 메뉴 (내용 그대로) -->
-    <div th:replace="fragments/menu :: menu"></div>
 
-    <h1>과일 주스 레시피</h1>
+	<div th:replace="fragments/menu :: menu"></div>
 
-    <div class="juice-card" id="juice-1">
-        <h2>1번 아침용 활력 주스</h2>
-        <p class="ingredient"><span class="section-title">재료:</span> 사과 1/2, 바나나 1/2, 키위 1, 물 100ml</p>
-        <p class="effect"><span class="section-title">효과:</span> 장 건강 + 에너지 보충, 면역력 강화</p>
-        <p class="tip"><span class="section-title">팁:</span> 사과와 키위로 아침에 필요한 비타민과 식이섬유를 챙기고, 바나나로 포만감과 에너지를 보충</p>
-    </div>
+	<h1>과일 주스 레시피</h1>
 
-    <div class="juice-card" id="juice-2">
-        <h2>2번 운동 전/후 에너지 주스</h2>
-        <p class="ingredient"><span class="section-title">재료:</span> 바나나 1, 사과 1/2, 배 1/2, 물 150ml</p>
-        <p class="effect"><span class="section-title">효과:</span> 운동 전 빠른 에너지, 운동 후 근육 회복</p>
-        <p class="tip"><span class="section-title">팁:</span> 바나나의 탄수화물과 칼륨이 근육 회복과 혈압 조절에 도움</p>
-    </div>
+	<div class="juice-card" id="juice-1">
+		<h2>1번 아침용 활력 주스</h2>
+		<p class="ingredient">
+			<span class="section-title">재료:</span> 사과 1/2, 바나나 1/2, 키위 1, 물 100ml
+		</p>
+		<p class="effect">
+			<span class="section-title">효과:</span> 장 건강 + 에너지 보충, 면역력 강화
+		</p>
+		<p class="tip">
+			<span class="section-title">팁:</span> 사과와 키위로 아침에 필요한 비타민과 식이섬유를 챙기고,
+			바나나로 포만감과 에너지를 보충
+		</p>
+	</div>
 
-    <div class="juice-card" id="juice-3">
-        <h2>3번 오후 면역력 강화 주스</h2>
-        <p class="ingredient"><span class="section-title">재료:</span> 키위 1, 감 1/2, 사과 1/2, 물 100ml</p>
-        <p class="effect"><span class="section-title">효과:</span> 면역력 강화, 혈관 건강</p>
-        <p class="tip"><span class="section-title">팁:</span> 비타민 C가 풍부한 키위와 감으로 오후 피로 회복</p>
-    </div>
+	<div class="juice-card" id="juice-2">
+		<h2>2번 운동 전/후 에너지 주스</h2>
+		<p class="ingredient">
+			<span class="section-title">재료:</span> 바나나 1, 사과 1/2, 배 1/2, 물 150ml
+		</p>
+		<p class="effect">
+			<span class="section-title">효과:</span> 운동 전 빠른 에너지, 운동 후 근육 회복
+		</p>
+		<p class="tip">
+			<span class="section-title">팁:</span> 바나나의 탄수화물과 칼륨이 근육 회복과 혈압 조절에 도움
+		</p>
+	</div>
 
-    <div class="juice-card" id="juice-4">
-        <h2>4번 저녁/숙면 도움 주스</h2>
-        <p class="ingredient"><span class="section-title">재료:</span> 배 1/2, 사과 1/2, 바나나 1/2, 물 100ml</p>
-        <p class="effect"><span class="section-title">효과:</span> 소화 도움, 목 건강, 숙면</p>
-        <p class="tip"><span class="section-title">팁:</span> 배와 바나나로 저녁 수분 보충과 부드러운 소화 지원</p>
-    </div>
+	<div class="juice-card" id="juice-3">
+		<h2>3번 오후 면역력 강화 주스</h2>
+		<p class="ingredient">
+			<span class="section-title">재료:</span> 키위 1, 감 1/2, 사과 1/2, 물 100ml
+		</p>
+		<p class="effect">
+			<span class="section-title">효과:</span> 면역력 강화, 혈관 건강
+		</p>
+		<p class="tip">
+			<span class="section-title">팁:</span> 비타민 C가 풍부한 키위와 감으로 오후 피로 회복
+		</p>
+	</div>
+
+	<div class="juice-card" id="juice-4">
+		<h2>4번 저녁/숙면 도움 주스</h2>
+		<p class="ingredient">
+			<span class="section-title">재료:</span> 배 1/2, 사과 1/2, 바나나 1/2, 물
+			100ml
+		</p>
+		<p class="effect">
+			<span class="section-title">효과:</span> 소화 도움, 목 건강, 숙면
+		</p>
+		<p class="tip">
+			<span class="section-title">팁:</span> 배와 바나나로 저녁 수분 보충과 부드러운 소화 지원
+		</p>
+	</div>
 
 </body>
 </html>

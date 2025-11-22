@@ -11,12 +11,12 @@ public class UsDTO {
 	private int userId;
 	private String userName;
 	private String userPassword;
-	private String passwordCheck; 
+	private String passwordCheck;
 	private String name;
 	private String phone;
 	private String email;
 	private String birth;
 	private String gender;
-	private String role; 
-	
+	private String role;
+
 }

@@ -5,51 +5,61 @@
 
 <mapper namespace="org.embed.mapper.ReviewMapper">
 
-  <resultMap id="ReviewWithReplies" type="org.embed.dto.ReviewDTO">
-    <id property="id" column="review_id"/>
-    <result property="userId" column="user_id"/>
-    <result property="userName" column="user_name"/>
-    <result property="userPassword" column="user_password"/>
-    <result property="content" column="content"/>
-    <result property="createdAt" column="created_at"/>
-    <collection property="replies" ofType="org.embed.dto.ReplyDTO">
-      <id property="id" column="reply_id"/>
-      <result property="reviewId" column="reply_review_id"/>
-      <result property="userId" column="reply_user_id"/>
-      <result property="userName" column="reply_user_name"/>
-      <result property="userPassword" column="reply_user_password"/>
-      <result property="content" column="reply_content"/>
-      <result property="createdAt" column="reply_created_at"/>
-    </collection>
-  </resultMap>
+	<resultMap id="ReviewWithReplies"
+		type="org.embed.dto.ReviewDTO">
+		<id property="id" column="review_id" />
+		<result property="userId" column="user_id" />
+		<result property="userName" column="user_name" />
+		<result property="userPassword" column="user_password" />
+		<result property="content" column="content" />
+		<result property="createdAt" column="created_at" />
+		<collection property="replies"
+			ofType="org.embed.dto.ReplyDTO">
+			<id property="id" column="reply_id" />
+			<result property="reviewId" column="reply_review_id" />
+			<result property="userId" column="reply_user_id" />
+			<result property="userName" column="reply_user_name" />
+			<result property="userPassword" column="reply_user_password" />
+			<result property="content" column="reply_content" />
+			<result property="createdAt" column="reply_created_at" />
+		</collection>
+	</resultMap>
 
-  <select id="selectAllReviews" resultMap="ReviewWithReplies">
-    SELECT 
-      r.id AS review_id, r.user_id, r.user_name, r.user_password, r.content, r.created_at,
-      p.id AS reply_id, p.review_id AS reply_review_id, p.user_id AS reply_user_id,
-      p.user_name AS reply_user_name, p.user_password AS reply_user_password,
-      p.content AS reply_content, p.created_at AS reply_created_at
-    FROM review_table r
-    LEFT JOIN reply_table p ON r.id = p.review_id
-    ORDER BY r.id, p.id
-  </select>
+	<select id="selectAllReviews" resultMap="ReviewWithReplies">
+		SELECT
+		r.id AS review_id, r.user_id, r.user_name, r.user_password, r.content,
+		r.created_at,
+		p.id AS reply_id, p.review_id AS reply_review_id, p.user_id AS
+		reply_user_id,
+		p.user_name AS reply_user_name, p.user_password AS reply_user_password,
+		p.content AS reply_content, p.created_at AS reply_created_at
+		FROM review_table r
+		LEFT JOIN reply_table p ON r.id = p.review_id
+		ORDER BY r.id, p.id
+	</select>
 
-  <insert id="insertReview" parameterType="org.embed.dto.ReviewDTO" useGeneratedKeys="true" keyProperty="id">
-    INSERT INTO review_table (user_id, user_name, user_password, content, created_at)
-    VALUES (#{userId}, #{userName}, #{userPassword}, #{content}, #{createdAt})
-  </insert>
+	<insert id="insertReview"
+		parameterType="org.embed.dto.ReviewDTO" useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO review_table (user_id, user_name, user_password, content,
+		created_at)
+		VALUES (#{userId}, #{userName}, #{userPassword}, #{content}, #{createdAt})
+	</insert>
 
-  <insert id="insertReply" parameterType="org.embed.dto.ReplyDTO" useGeneratedKeys="true" keyProperty="id">
-    INSERT INTO reply_table (review_id, user_id, user_name, user_password, content, created_at)
-    VALUES (#{reviewId}, #{userId}, #{userName}, #{userPassword}, #{content}, #{createdAt})
-  </insert>
+	<insert id="insertReply" parameterType="org.embed.dto.ReplyDTO"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO reply_table (review_id, user_id, user_name, user_password,
+		content, created_at)
+		VALUES (#{reviewId}, #{userId}, #{userName}, #{userPassword}, #{content},
+		#{createdAt})
+	</insert>
 
-  <delete id="deleteReview" parameterType="long">
-    DELETE FROM review_table WHERE id = #{id}
-  </delete>
+	<delete id="deleteReview" parameterType="long">
+		DELETE FROM review_table WHERE id = #{id}
+	</delete>
 
-  <delete id="deleteReply" parameterType="long">
-    DELETE FROM reply_table WHERE id = #{id}
-  </delete>
+	<delete id="deleteReply" parameterType="long">
+		DELETE FROM reply_table WHERE id = #{id}
+	</delete>
 
 </mapper>

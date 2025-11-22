@@ -5,33 +5,38 @@
 
 <mapper namespace="org.embed.mapper.NoticeMapper">
 
-    <select id="selectNoticeList" resultType="org.embed.dto.NoticeDTO">
-        SELECT post_id AS postId, title, content, writer, view_count AS viewCount,
-               created_at AS createdAt, updated_at AS updatedAt
-        FROM notice
-        ORDER BY created_at DESC
-    </select>
+	<select id="selectNoticeList"
+		resultType="org.embed.dto.NoticeDTO">
+		SELECT post_id AS postId, title, content, writer, view_count AS viewCount,
+		created_at AS createdAt, updated_at AS updatedAt
+		FROM notice
+		ORDER BY created_at DESC
+	</select>
 
-    <select id="selectNoticeDetail" parameterType="int" resultType="org.embed.dto.NoticeDTO">
-        SELECT post_id AS postId, title, content, writer, view_count AS viewCount,
-               created_at AS createdAt, updated_at AS updatedAt
-        FROM notice
-        WHERE post_id = #{postId}
-    </select>
+	<select id="selectNoticeDetail" parameterType="int"
+		resultType="org.embed.dto.NoticeDTO">
+		SELECT post_id AS postId, title, content, writer, view_count AS viewCount,
+		created_at AS createdAt, updated_at AS updatedAt
+		FROM notice
+		WHERE post_id = #{postId}
+	</select>
 
-    <insert id="insertNotice" parameterType="org.embed.dto.NoticeDTO">
-        INSERT INTO notice (title, content, writer, view_count, created_at, updated_at)
-        VALUES (#{title}, #{content}, #{writer}, 0, NOW(), NOW())
-    </insert>
+	<insert id="insertNotice"
+		parameterType="org.embed.dto.NoticeDTO">
+		INSERT INTO notice (title, content, writer, view_count, created_at,
+		updated_at)
+		VALUES (#{title}, #{content}, #{writer}, 0, NOW(), NOW())
+	</insert>
 
-    <update id="updateNotice" parameterType="org.embed.dto.NoticeDTO">
-        UPDATE notice
-        SET title = #{title}, content = #{content}, updated_at = NOW()
-        WHERE post_id = #{postId}
-    </update>
+	<update id="updateNotice"
+		parameterType="org.embed.dto.NoticeDTO">
+		UPDATE notice
+		SET title = #{title}, content = #{content}, updated_at = NOW()
+		WHERE post_id = #{postId}
+	</update>
 
-    <delete id="deleteNotice" parameterType="int">
-        DELETE FROM notice WHERE post_id = #{postId}
-    </delete>
+	<delete id="deleteNotice" parameterType="int">
+		DELETE FROM notice WHERE post_id = #{postId}
+	</delete>
 
 </mapper>

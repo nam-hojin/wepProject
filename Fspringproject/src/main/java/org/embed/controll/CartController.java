@@ -24,81 +24,75 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/cart")
 public class CartController {
 
-    private final CartService cartService;
-    private final ProductService productService;
+	private final CartService cartService;
+	private final ProductService productService;
 
-    public CartController(CartService cartService, ProductService productService) {
-        this.cartService = cartService;
-        this.productService = productService;
-    }
+	public CartController(CartService cartService, ProductService productService) {
+		this.cartService = cartService;
+		this.productService = productService;
+	}
 
-    // 장바구니 메인 페이지
-    @GetMapping({"", "/main", "/list"})
-    public String cartMain(HttpSession session, Model model) {
-        UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
-        if (loginUser == null) {
-            return "redirect:/login.to";
-        }
+	@GetMapping({ "", "/main", "/list" })
+	public String cartMain(HttpSession session, Model model) {
+		UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
+		if (loginUser == null) {
+			return "redirect:/login.to";
+		}
 
-        Integer userId = loginUser.getUserId();
-        CartDTO cart = cartService.getCartByUserId(userId);
+		Integer userId = loginUser.getUserId();
+		CartDTO cart = cartService.getCartByUserId(userId);
 
-        Map<Integer, ProductDTO> productMap = new HashMap<>();
-        if (cart.getItems() != null) {
-            for (CartItemDTO item : cart.getItems()) {
-                ProductDTO product = productService.getProductById(item.getProductId());
-                if (product != null) {
-                    productMap.put(item.getProductId(), product);
-                }
-            }
-        }
+		Map<Integer, ProductDTO> productMap = new HashMap<>();
+		if (cart.getItems() != null) {
+			for (CartItemDTO item : cart.getItems()) {
+				ProductDTO product = productService.getProductById(item.getProductId());
+				if (product != null) {
+					productMap.put(item.getProductId(), product);
+				}
+			}
+		}
 
-        model.addAttribute("cart", cart);
-        model.addAttribute("productMap", productMap);
+		model.addAttribute("cart", cart);
+		model.addAttribute("productMap", productMap);
 
-        return "cart/cartMain";
-    }
+		return "cart/cartMain";
+	}
 
-    // 장바구니에 상품 추가
-    @PostMapping("/add")
-    public String addCart(HttpSession session,
-                          @RequestParam("productId") Integer productId,
-                          @RequestParam(name = "quantity", defaultValue = "1") Integer quantity) {
-        UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
-        if (loginUser == null) {
-            return "redirect:/login.to";
-        }
+	@PostMapping("/add")
+	public String addCart(HttpSession session, @RequestParam("productId") Integer productId,
+			@RequestParam(name = "quantity", defaultValue = "1") Integer quantity) {
+		UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
+		if (loginUser == null) {
+			return "redirect:/login.to";
+		}
 
-        CartItemDTO item = new CartItemDTO();
-        item.setProductId(productId);
-        item.setQuantity(quantity);
+		CartItemDTO item = new CartItemDTO();
+		item.setProductId(productId);
+		item.setQuantity(quantity);
 
-        cartService.addItem(loginUser.getUserId(), item);
-        return "redirect:/cart/main";
-    }
+		cartService.addItem(loginUser.getUserId(), item);
+		return "redirect:/cart/main";
+	}
 
-    // 장바구니에서 특정 상품 제거
-    @PostMapping("/remove")
-    public String removeCart(HttpSession session,
-                             @RequestParam("productId") Integer productId) {
-        UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
-        if (loginUser == null) {
-            return "redirect:/login.to";
-        }
+	@PostMapping("/remove")
+	public String removeCart(HttpSession session, @RequestParam("productId") Integer productId) {
+		UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
+		if (loginUser == null) {
+			return "redirect:/login.to";
+		}
 
-        cartService.removeItem(loginUser.getUserId(), productId);
-        return "redirect:/cart/main";
-    }
+		cartService.removeItem(loginUser.getUserId(), productId);
+		return "redirect:/cart/main";
+	}
 
-    // 장바구니 전체 비우기
-    @PostMapping("/clear")
-    public String clearCart(HttpSession session) {
-        UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
-        if (loginUser == null) {
-            return "redirect:/login.to";
-        }
+	@PostMapping("/clear")
+	public String clearCart(HttpSession session) {
+		UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
+		if (loginUser == null) {
+			return "redirect:/login.to";
+		}
 
-        cartService.clearCart(loginUser.getUserId());
-        return "redirect:/cart/main";
-    }
+		cartService.clearCart(loginUser.getUserId());
+		return "redirect:/cart/main";
+	}
 }

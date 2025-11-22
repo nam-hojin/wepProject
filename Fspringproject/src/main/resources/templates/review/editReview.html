@@ -1,169 +1,174 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>리뷰 수정</title>
-    <style>
-        /* ========================= */
-        /* 상단 네비게이션 고정      */
-        /* ========================= */
-        .top-nav-table {
-            width: 100%;
-            border-collapse: collapse;
-            padding: 10px 0;
-            table-layout: fixed;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: #fff8dc;
-            z-index: 1000;
-        }
+<meta charset="UTF-8">
+<title>리뷰 수정</title>
+<style>
+.top-nav-table {
+	width: 100%;
+	border-collapse: collapse;
+	padding: 10px 0;
+	table-layout: fixed;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: #fff8dc;
+	z-index: 1000;
+}
 
-        .top-nav-table td a {
-            font-size: 10pt;
-            text-decoration: none;
-            color: black;
-            padding: 0;
-        }
+.top-nav-table td a {
+	font-size: 10pt;
+	text-decoration: none;
+	color: black;
+	padding: 0;
+}
 
-        .top-nav-table td a:hover { color: yellow; }
+.top-nav-table td a:hover {
+	color: yellow;
+}
 
-        .top-nav-table .left { text-align: left; padding-left: 10px; }
-        .top-nav-table .center { text-align: center; font-weight: bold; font-size: 18px; }
-        .top-nav-table .right { text-align: right; padding-right: 10px; }
-        .top-nav-table .right a { font-size: 5pt; margin: 0 5px; letter-spacing: -1px; white-space: nowrap; }
+.top-nav-table .left {
+	text-align: left;
+	padding-left: 10px;
+}
 
-        /* ========================= */
-        /* 메인 네비게이션 고정      */
-        /* ========================= */
-        .main-nav-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: center;
-            position: fixed;
-            top: 50px; /* 상단 메뉴 아래 위치 */
-            left: 0;
-            background-color: #fff8dc;
-            z-index: 999;
-        }
+.top-nav-table .center {
+	text-align: center;
+	font-weight: bold;
+	font-size: 18px;
+}
 
-        .main-nav-table td { width: 16.66%; }
+.top-nav-table .right {
+	text-align: right;
+	padding-right: 10px;
+}
 
-        .main-nav-table td a {
-            display: block;
-            padding: 5px 0;
-            text-decoration: none;
-            color: black;
-        }
+.top-nav-table .right a {
+	font-size: 5pt;
+	margin: 0 5px;
+	letter-spacing: -1px;
+	white-space: nowrap;
+}
 
-        .main-nav-table td a:hover { color: yellow; }
+.main-nav-table {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: center;
+	position: fixed;
+	top: 50px;
+	left: 0;
+	background-color: #fff8dc;
+	z-index: 999;
+}
 
-        /* ========================= */
-        /* 본문 패딩 확보            */
-        /* ========================= */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fff8dc;
-            padding-top: 90px; /* 상단 + 메인 메뉴 높이 확보 */
-            text-align: center;
-        }
+.main-nav-table td {
+	width: 16.66%;
+}
 
-        /* ========================= */
-        /* 페이지 타이틀             */
-        /* ========================= */
-        h1 {
-            color: #ff4500;
-            margin-bottom: 20px;
-        }
+.main-nav-table td a {
+	display: block;
+	padding: 5px 0;
+	text-decoration: none;
+	color: black;
+}
 
-        /* ========================= */
-        /* 폼 컨테이너 스타일        */
-        /* ========================= */
-        .form-container {
-            width: 500px;
-            margin: 0 auto 30px auto;
-            padding: 30px 40px;
-            background-color: #fff5e6;
-            border: 2px solid #ffa500;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            text-align: left;
-        }
+.main-nav-table td a:hover {
+	color: yellow;
+}
 
-        label {
-            display: block;
-            margin-bottom: 15px;
-            font-weight: bold;
-            color: #333;
-        }
+body {
+	font-family: Arial, sans-serif;
+	background-color: #fff8dc;
+	padding-top: 90px;
+	text-align: center;
+}
 
-        input[type="text"],
-        input[type="number"],
-        input[type="password"],
-        textarea {
-            width: 100%;
-            padding: 8px 10px;
-            margin-top: 5px;
-            border: 1px solid #ffa500;
-            border-radius: 5px;
-            font-size: 12pt;
-            background-color: #fffaf0;
-            box-sizing: border-box;
-        }
+h1 {
+	color: #ff4500;
+	margin-bottom: 20px;
+}
 
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
+.form-container {
+	width: 500px;
+	margin: 0 auto 30px auto;
+	padding: 30px 40px;
+	background-color: #fff5e6;
+	border: 2px solid #ffa500;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	text-align: left;
+}
 
-        button {
-            padding: 8px 15px;
-            background-color: #ff4500;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12pt;
-            margin: 5px 2px 0 0;
-            transition: background-color 0.3s;
-        }
+label {
+	display: block;
+	margin-bottom: 15px;
+	font-weight: bold;
+	color: #333;
+}
 
-        button:hover {
-            background-color: #ff7f50;
-        }
+input[type="text"], input[type="number"], input[type="password"],
+	textarea {
+	width: 100%;
+	padding: 8px 10px;
+	margin-top: 5px;
+	border: 1px solid #ffa500;
+	border-radius: 5px;
+	font-size: 12pt;
+	background-color: #fffaf0;
+	box-sizing: border-box;
+}
 
-        .form-buttons {
-            text-align: right;
-        }
+textarea {
+	resize: vertical;
+	min-height: 100px;
+}
 
-        .form-buttons a {
-            text-decoration: none;
-        }
-    </style>
+button {
+	padding: 8px 15px;
+	background-color: #ff4500;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 12pt;
+	margin: 5px 2px 0 0;
+	transition: background-color 0.3s;
+}
+
+button:hover {
+	background-color: #ff7f50;
+}
+
+.form-buttons {
+	text-align: right;
+}
+
+.form-buttons a {
+	text-decoration: none;
+}
+</style>
 </head>
 <body>
 
-<!-- 상단 메뉴 불러오기 -->
-<div th:replace="fragments/menu :: menu"></div>
 
-<h1>리뷰 수정</h1>
+	<div th:replace="fragments/menu :: menu"></div>
 
-<div class="form-container">
-    <form th:action="@{/edit2.go}" th:object="${review}" method="post">
-        <input type="hidden" th:field="*{id}" />
+	<h1>리뷰 수정</h1>
 
-        <label>내용:
-            <textarea th:field="*{content}" placeholder="리뷰 내용을 수정하세요" required></textarea>
-        </label>
+	<div class="form-container">
+		<form th:action="@{/edit2.go}" th:object="${review}" method="post">
+			<input type="hidden" th:field="*{id}" /> <label>내용: <textarea
+					th:field="*{content}" placeholder="리뷰 내용을 수정하세요" required></textarea>
+			</label>
 
-        <div class="form-buttons">
-            <button type="submit">수정 완료</button>
-            <a th:href="@{/reviews.go}">
-                <button type="button">취소</button>
-            </a>
-        </div>
-    </form>
-</div>
+			<div class="form-buttons">
+				<button type="submit">수정 완료</button>
+				<a th:href="@{/reviews.go}">
+					<button type="button">취소</button>
+				</a>
+			</div>
+		</form>
+	</div>
 
 </body>
 </html>

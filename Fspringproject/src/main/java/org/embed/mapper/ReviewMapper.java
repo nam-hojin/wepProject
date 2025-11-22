@@ -7,14 +7,18 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface ReviewMapper {
-    // 리뷰
-    List<ReviewDTO> selectAllReviews();
-    void insertReview(ReviewDTO review);
-    void updateReview(ReviewDTO review);
-    void deleteReview(Long id);
 
-    // 답변
-    List<ReplyDTO> selectRepliesByReviewId(Long reviewId);
-    void insertReply(ReplyDTO reply);
-    void deleteReply(Long replyId);
+	List<ReviewDTO> selectAllReviews();
+
+	void insertReview(ReviewDTO review);
+
+	void updateReview(ReviewDTO review);
+
+	void deleteReview(Long id);
+
+	List<ReplyDTO> selectRepliesByReviewId(Long reviewId);
+
+	void insertReply(ReplyDTO reply);
+
+	void deleteReply(Long replyId);
 }

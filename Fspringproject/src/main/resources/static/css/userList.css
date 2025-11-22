@@ -1,12 +1,12 @@
 @charset "UTF-8";
-/* 전체 컨테이너 */
+
 #page-title, #user-table, #admin-actions {
     width: 90%;
     margin: 20px auto;
     font-family: Arial, sans-serif;
 }
 
-/* 페이지 제목 스타일 */
+
 #page-title {
     text-align: center;
     color: #333;
@@ -14,7 +14,7 @@
     font-size: 2em;
 }
 
-/* body 기본 스타일 */
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
@@ -22,7 +22,7 @@ body {
     padding: 0;
 }
 
-/* 테이블 스타일 */
+
 #user-table {
     width: 90%;
     margin: 20px auto;
@@ -42,12 +42,12 @@ body {
     color: #333;
 }
 
-/* 홀수/짝수 줄 색상 */
+
 #user-table tbody tr:nth-child(even) {
     background-color: #fafafa;
 }
 
-/* 버튼 스타일 */
+
 #create-question-btn, #home-btn, #home-link {
     display: inline-block;
     margin: 10px 5px;
@@ -66,7 +66,7 @@ body {
     background-color: #0056b3;
 }
 
-/* 관리자 버튼 영역 */
+
 #admin-actions {
     text-align: center;
     margin-top: 20px;

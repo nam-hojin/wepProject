@@ -12,52 +12,50 @@ import org.springframework.stereotype.Service;
 @Service
 public class CartServiceImpl implements CartService {
 
-    @Autowired
-    private CartMapper cartMapper;
+	@Autowired
+	private CartMapper cartMapper;
 
-    @Override
-    public CartDTO getCartByUserId(Integer userId) {
-        CartDTO cart = cartMapper.selectCartByUserId(userId);
-        if (cart == null) {
-            cart = new CartDTO();
-            cart.setUserId(userId);
-            cart.setCreatedAt(LocalDateTime.now());
-            cart.setUpdatedAt(LocalDateTime.now());
-            cartMapper.insertCart(cart); // 새 카트 생성
-        }
-        List<CartItemDTO> items = cartMapper.selectCartItems(cart.getCartId());
-        cart.setItems(items);
-        return cart;
-    }
+	@Override
+	public CartDTO getCartByUserId(Integer userId) {
+		CartDTO cart = cartMapper.selectCartByUserId(userId);
+		if (cart == null) {
+			cart = new CartDTO();
+			cart.setUserId(userId);
+			cart.setCreatedAt(LocalDateTime.now());
+			cart.setUpdatedAt(LocalDateTime.now());
+			cartMapper.insertCart(cart);
+		}
+		List<CartItemDTO> items = cartMapper.selectCartItems(cart.getCartId());
+		cart.setItems(items);
+		return cart;
+	}
 
-    @Override
-    public void addItem(Integer userId, CartItemDTO item) {
-        CartDTO cart = getCartByUserId(userId);
-        item.setCartId(cart.getCartId());
+	@Override
+	public void addItem(Integer userId, CartItemDTO item) {
+		CartDTO cart = getCartByUserId(userId);
+		item.setCartId(cart.getCartId());
 
-        // 기존에 같은 상품이 있는지 확인
-        CartItemDTO existingItem = cart.getItems().stream()
-                .filter(i -> i.getProductId().equals(item.getProductId()))
-                .findFirst().orElse(null);
+		CartItemDTO existingItem = cart.getItems().stream().filter(i -> i.getProductId().equals(item.getProductId()))
+				.findFirst().orElse(null);
 
-        if (existingItem != null) {
-            existingItem.setQuantity(existingItem.getQuantity() + item.getQuantity());
-            existingItem.setAddedAt(LocalDateTime.now());
-            cartMapper.deleteCartItem(cart.getCartId(), item.getProductId()); // 기존 삭제
-        }
-        item.setAddedAt(LocalDateTime.now());
-        cartMapper.insertCartItem(item);
-    }
+		if (existingItem != null) {
+			existingItem.setQuantity(existingItem.getQuantity() + item.getQuantity());
+			existingItem.setAddedAt(LocalDateTime.now());
+			cartMapper.deleteCartItem(cart.getCartId(), item.getProductId());
+		}
+		item.setAddedAt(LocalDateTime.now());
+		cartMapper.insertCartItem(item);
+	}
 
-    @Override
-    public void removeItem(Integer userId, Integer productId) {
-        CartDTO cart = getCartByUserId(userId);
-        cartMapper.deleteCartItem(cart.getCartId(), productId);
-    }
+	@Override
+	public void removeItem(Integer userId, Integer productId) {
+		CartDTO cart = getCartByUserId(userId);
+		cartMapper.deleteCartItem(cart.getCartId(), productId);
+	}
 
-    @Override
-    public void clearCart(Integer userId) {
-        CartDTO cart = getCartByUserId(userId);
-        cartMapper.deleteCartItems(cart.getCartId());
-    }
+	@Override
+	public void clearCart(Integer userId) {
+		CartDTO cart = getCartByUserId(userId);
+		cartMapper.deleteCartItems(cart.getCartId());
+	}
 }

@@ -6,37 +6,39 @@
 
 <mapper namespace="org.embed.mapper.FileMapper">
 
-    <!-- 전체 조회 -->
-    <select id="selectAll" resultType="org.embed.dto.FileDTO">
-        SELECT * FROM uploaded_files ORDER BY id DESC
-    </select>
 
-    <!-- 단일 조회 -->
-    <select id="selectById" parameterType="int" resultType="org.embed.dto.FileDTO">
-        SELECT * FROM uploaded_files WHERE id = #{id}
-    </select>
+	<select id="selectAll" resultType="org.embed.dto.FileDTO">
+		SELECT * FROM uploaded_files ORDER BY id DESC
+	</select>
 
-    <!-- 파일 등록 -->
-    <insert id="insertFile" parameterType="org.embed.dto.FileDTO" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO uploaded_files
-        (user_id, original_file_name, stored_file_path, file_size, created_at)
-        VALUES
-        (#{userId}, #{originalFileName}, #{storedFilePath}, #{fileSize}, NOW())
-    </insert>
 
-    <!-- 파일 수정 -->
-    <update id="updateFile" parameterType="org.embed.dto.FileDTO">
-        UPDATE uploaded_files
-        SET
-        original_file_name = #{originalFileName},
-        stored_file_path = #{storedFilePath},
-        file_size = #{fileSize}
-        WHERE id = #{id}
-    </update>
+	<select id="selectById" parameterType="int"
+		resultType="org.embed.dto.FileDTO">
+		SELECT * FROM uploaded_files WHERE id = #{id}
+	</select>
 
-    <!-- 파일 삭제 -->
-    <delete id="deleteFile" parameterType="int">
-        DELETE FROM uploaded_files WHERE id = #{id}
-    </delete>
+
+	<insert id="insertFile" parameterType="org.embed.dto.FileDTO"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO uploaded_files
+		(user_id, original_file_name, stored_file_path, file_size, created_at)
+		VALUES
+		(#{userId}, #{originalFileName}, #{storedFilePath}, #{fileSize}, NOW())
+	</insert>
+
+
+	<update id="updateFile" parameterType="org.embed.dto.FileDTO">
+		UPDATE uploaded_files
+		SET
+		original_file_name = #{originalFileName},
+		stored_file_path = #{storedFilePath},
+		file_size = #{fileSize}
+		WHERE id = #{id}
+	</update>
+
+
+	<delete id="deleteFile" parameterType="int">
+		DELETE FROM uploaded_files WHERE id = #{id}
+	</delete>
 
 </mapper>

@@ -4,52 +4,56 @@
 
 <mapper namespace="org.embed.mapper.UsMapper">
 
-    <!-- 회원 등록 -->
-    <insert id="insertUs" parameterType="org.embed.dto.UsDTO">
-        INSERT INTO us (user_name, user_password, name, phone, email, birth, gender, role)
-        VALUES (#{userName}, #{userPassword}, #{name}, #{phone}, #{email}, #{birth}, #{gender}, #{role})
-    </insert>
 
-    <!-- 로그인 체크 -->
-    <select id="loginCheck" resultType="org.embed.dto.UsDTO">
-        SELECT * FROM us
-        WHERE user_name = #{userName} AND user_password = #{userPassword}
-    </select>
+	<insert id="insertUs" parameterType="org.embed.dto.UsDTO">
+		INSERT INTO us (user_name, user_password, name, phone, email, birth, gender,
+		role)
+		VALUES (#{userName}, #{userPassword}, #{name}, #{phone}, #{email}, #{birth},
+		#{gender}, #{role})
+	</insert>
 
-    <!-- ID로 회원 조회 -->
-    <select id="getUserById" parameterType="int" resultType="org.embed.dto.UsDTO">
-        SELECT * FROM us WHERE user_id = #{userId}
-    </select>
 
-    <!-- 사용자명으로 회원 조회 -->
-    <select id="findByUserName" parameterType="String" resultType="org.embed.dto.UsDTO">
-        SELECT * FROM us WHERE user_name = #{userName}
-    </select>
+	<select id="loginCheck" resultType="org.embed.dto.UsDTO">
+		SELECT * FROM us
+		WHERE user_name = #{userName} AND user_password = #{userPassword}
+	</select>
 
-    <!-- 회원 정보 수정 -->
-    <update id="updateUs" parameterType="org.embed.dto.UsDTO">
-        UPDATE us
-        SET user_name=#{userName},
-            user_password=#{userPassword},
-            name=#{name},
-            phone=#{phone},
-            email=#{email},
-            birth=#{birth},
-            gender=#{gender},
-            role=#{role}
-        WHERE user_id=#{userId}
-    </update>
 
-    <!-- 회원 삭제 -->
-    <delete id="deleteUs" parameterType="int">
-        DELETE FROM us WHERE user_id=#{userId}
-    </delete>
+	<select id="getUserById" parameterType="int"
+		resultType="org.embed.dto.UsDTO">
+		SELECT * FROM us WHERE user_id = #{userId}
+	</select>
 
-    <!-- 전체 회원 조회 -->
-    <select id="getAllUsers" resultType="org.embed.dto.UsDTO">
-        SELECT * FROM us
-    </select>
-    
-   
+
+	<select id="findByUserName" parameterType="String"
+		resultType="org.embed.dto.UsDTO">
+		SELECT * FROM us WHERE user_name = #{userName}
+	</select>
+
+
+	<update id="updateUs" parameterType="org.embed.dto.UsDTO">
+		UPDATE us
+		SET user_name=#{userName},
+		user_password=#{userPassword},
+		name=#{name},
+		phone=#{phone},
+		email=#{email},
+		birth=#{birth},
+		gender=#{gender},
+		role=#{role}
+		WHERE user_id=#{userId}
+	</update>
+
+
+	<delete id="deleteUs" parameterType="int">
+		DELETE FROM us WHERE user_id=#{userId}
+	</delete>
+
+
+	<select id="getAllUsers" resultType="org.embed.dto.UsDTO">
+		SELECT * FROM us
+	</select>
+
+
 
 </mapper>

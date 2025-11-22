@@ -8,11 +8,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class DeliveryInfoDTO {
-    private Long itemId;       // CartItemId
-    private Integer productId; // 상품 ID
-    private Integer quantity;
-    private String recipientName;
-    private String address;
-    private String phone;
-    private Boolean selected = false; // 체크박스 선택 여부
+	private Long itemId;
+	private Integer productId;
+	private Integer quantity;
+	private String recipientName;
+	private String address;
+	private String phone;
+	private Boolean selected = false;
 }

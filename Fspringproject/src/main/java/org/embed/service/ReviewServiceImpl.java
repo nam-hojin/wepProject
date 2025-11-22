@@ -12,51 +12,49 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ReviewServiceImpl implements ReviewService {
 
-    private final ReviewMapper reviewMapper;
+	private final ReviewMapper reviewMapper;
 
-    public ReviewServiceImpl(ReviewMapper reviewMapper) {
-        this.reviewMapper = reviewMapper;
-    }
+	public ReviewServiceImpl(ReviewMapper reviewMapper) {
+		this.reviewMapper = reviewMapper;
+	}
 
-    // 리뷰 관련
-    @Override
-    public List<ReviewDTO> getAllReviews() {
-        return reviewMapper.selectAllReviews();
-    }
+	@Override
+	public List<ReviewDTO> getAllReviews() {
+		return reviewMapper.selectAllReviews();
+	}
 
-    @Override
-    @Transactional
-    public void createReview(ReviewDTO review) {
-        reviewMapper.insertReview(review);
-    }
+	@Override
+	@Transactional
+	public void createReview(ReviewDTO review) {
+		reviewMapper.insertReview(review);
+	}
 
-    @Override
-    @Transactional
-    public void updateReview(ReviewDTO review) {
-        reviewMapper.updateReview(review);
-    }
+	@Override
+	@Transactional
+	public void updateReview(ReviewDTO review) {
+		reviewMapper.updateReview(review);
+	}
 
-    @Override
-    @Transactional
-    public void deleteReview(Long id) {
-        reviewMapper.deleteReview(id);
-    }
+	@Override
+	@Transactional
+	public void deleteReview(Long id) {
+		reviewMapper.deleteReview(id);
+	}
 
-    // 답변 관련
-    @Override
-    public List<ReplyDTO> getReplies(Long reviewId) {
-        return reviewMapper.selectRepliesByReviewId(reviewId);
-    }
+	@Override
+	public List<ReplyDTO> getReplies(Long reviewId) {
+		return reviewMapper.selectRepliesByReviewId(reviewId);
+	}
 
-    @Override
-    @Transactional
-    public void createReply(ReplyDTO reply) {
-        reviewMapper.insertReply(reply);
-    }
+	@Override
+	@Transactional
+	public void createReply(ReplyDTO reply) {
+		reviewMapper.insertReply(reply);
+	}
 
-    @Override
-    @Transactional
-    public void deleteReply(Long replyId) {
-        reviewMapper.deleteReply(replyId);
-    }
+	@Override
+	@Transactional
+	public void deleteReply(Long replyId) {
+		reviewMapper.deleteReply(replyId);
+	}
 }

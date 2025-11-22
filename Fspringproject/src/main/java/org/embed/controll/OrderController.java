@@ -1,107 +1,96 @@
 package org.embed.controll;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.embed.dto.CartDTO;
 import org.embed.dto.CartItemDTO;
-import org.embed.dto.DeliveryInfoDTO;
-import org.embed.dto.DeliveryInfoForm;
+import org.embed.dto.OrderDTO;
+import org.embed.dto.ProductDTO;
+import org.embed.dto.UsDTO;
+import org.embed.service.CartService;
 import org.embed.service.OrderService;
+import org.embed.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 
 @Controller
+@RequestMapping("/order")
 public class OrderController {
 
-    private final OrderService orderService;
-    private static final String SESSION_CART = "SESSION_CART";
-    private static final String SESSION_DELIVERY = "deliveryInfoForm";
+	private final OrderService orderService;
+	private final CartService cartService;
+	private final ProductService productService;
 
-    public OrderController(OrderService orderService) {
-        this.orderService = orderService;
-    }
+	public OrderController(OrderService orderService, CartService cartService, ProductService productService) {
+		this.orderService = orderService;
+		this.cartService = cartService;
+		this.productService = productService;
+	}
 
-    // 1. 배송정보 입력 페이지
-    @GetMapping("/order/delivery")
-    public String showDeliveryPage(HttpSession session, Model model) {
-        CartDTO cart = (CartDTO) session.getAttribute(SESSION_CART);
-        if (cart == null) cart = new CartDTO();
+	@GetMapping("/delivery")
+	public String deliveryPage(HttpSession session, Model model) {
+		UsDTO user = (UsDTO) session.getAttribute("loginUser");
+		if (user == null)
+			return "redirect:/login.to";
 
-        List<CartItemDTO> cartItems = cart.getItems();
-        if (cartItems == null) cartItems = new ArrayList<>();
+		CartDTO cart = cartService.getCartByUserId(user.getUserId());
+		if (cart == null || cart.getItems() == null) {
+			model.addAttribute("items", new ArrayList<>());
+			model.addAttribute("totalPrice", 0);
+			return "delivery/delivery";
+		}
 
-        List<DeliveryInfoDTO> deliveryInfoDTOs = new ArrayList<>();
-        for (CartItemDTO item : cartItems) {
-            DeliveryInfoDTO dto = new DeliveryInfoDTO();
-            dto.setItemId(item.getCartItemId());
-            dto.setProductId(item.getProductId());
-            dto.setQuantity(item.getQuantity());
-            deliveryInfoDTOs.add(dto);
-        }
+		int totalPrice = 0;
+		List<Map<String, Object>> items = new ArrayList<>();
 
-        DeliveryInfoForm form = new DeliveryInfoForm();
-        form.setDeliveryInfoDTOs(deliveryInfoDTOs);
+		for (CartItemDTO item : cart.getItems()) {
+			ProductDTO p = productService.getProductById(item.getProductId());
+			if (p == null)
+				continue;
 
-        model.addAttribute("deliveryInfoForm", form);
-        session.setAttribute(SESSION_DELIVERY, form); // 세션 저장
-        return "delivery/delivery";
-    }
+			Map<String, Object> map = new HashMap<>();
+			map.put("productName", p.getName());
+			map.put("price", p.getPrice());
+			map.put("quantity", item.getQuantity());
+			items.add(map);
 
-    // 2. 배송정보 입력 → 주문 완료
-    @PostMapping("/order/delivery")
-    public String processDelivery(@ModelAttribute DeliveryInfoForm form, HttpSession session) {
+			totalPrice += p.getPrice() * item.getQuantity();
+		}
 
-        // 로그인 유저 가져오기 (예제)
-        Long userId = 1L;
+		model.addAttribute("items", items);
+		model.addAttribute("totalPrice", totalPrice);
 
-        // 세션에서 DeliveryInfoForm 가져오기
-        DeliveryInfoForm sessionForm = (DeliveryInfoForm) session.getAttribute(SESSION_DELIVERY);
+		return "delivery/delivery";
+	}
 
-        // 세션에 값이 없으면 새로운 폼 생성
-        if (sessionForm == null || sessionForm.getDeliveryInfoDTOs() == null) {
-            sessionForm = new DeliveryInfoForm();
-            sessionForm.setDeliveryInfoDTOs(new ArrayList<>());
-        }
+	@PostMapping("/pay")
+	public String pay(HttpSession session, @RequestParam("address") String address, @ModelAttribute OrderDTO order) {
+		UsDTO user = (UsDTO) session.getAttribute("loginUser");
+		if (user == null)
+			return "redirect:/login.to";
 
-        List<DeliveryInfoDTO> sessionDeliveryList = sessionForm.getDeliveryInfoDTOs();
-        List<DeliveryInfoDTO> inputList = form.getDeliveryInfoDTOs();
+		boolean success = true;
 
-        // 세션 리스트가 비어있으면 입력값으로 초기화
-        if (sessionDeliveryList.isEmpty() && inputList != null) {
-            sessionDeliveryList.addAll(inputList);
-        } else if (inputList != null) {
-            // 기존 리스트 덮어쓰기
-            for (int i = 0; i < inputList.size(); i++) {
-                DeliveryInfoDTO input = inputList.get(i);
-                if (i < sessionDeliveryList.size()) {
-                    DeliveryInfoDTO sessionDto = sessionDeliveryList.get(i);
-                    sessionDto.setRecipientName(input.getRecipientName());
-                    sessionDto.setAddress(input.getAddress());
-                    sessionDto.setPhone(input.getPhone());
-                } else {
-                    sessionDeliveryList.add(input);
-                }
-            }
-        }
+		if (success) {
 
-        // 세션에 업데이트
-        session.setAttribute(SESSION_DELIVERY, sessionForm);
+			orderService.createOrder(user.getUserId(), address);
 
-        // 주문 처리
-        orderService.createOrder(sessionDeliveryList, userId);
+			cartService.clearCart(user.getUserId());
 
-        return "redirect:/order/complete";
-    }
+			return "delivery/confirm";
+		} else {
 
-    // 3. 주문 완료 페이지
-    @GetMapping("/order/complete")
-    public String showOrderCompletePage() {
-        return "delivery/confirm";
-    }
+			return "delivery/delivery";
+		}
+	}
 }

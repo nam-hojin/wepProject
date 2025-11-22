@@ -9,12 +9,11 @@ import lombok.Setter;
 @Setter
 public class QuestionDTO {
 
-	
-	    private int postId;
-	    private String title;
-	    private String content;
-	    private String writer;
-	    private int viewCount;
-	    private Timestamp createdAt;
-	    private Timestamp updatedAt;
+	private int postId;
+	private String title;
+	private String content;
+	private String writer;
+	private int viewCount;
+	private Timestamp createdAt;
+	private Timestamp updatedAt;
 }

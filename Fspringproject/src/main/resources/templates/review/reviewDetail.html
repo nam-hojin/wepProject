@@ -4,274 +4,246 @@
 <meta charset="UTF-8">
 <title>리뷰 상세</title>
 <style>
-/* 페이지 전체 배경 및 기본 폰트 */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #fff8dc;
-    text-align: center;
-    padding: 0; /* 고정 메뉴 패딩 제거 */
+	font-family: Arial, sans-serif;
+	background-color: #fff8dc;
+	text-align: center;
+	padding: 0;
 }
 
-/* ===================== */
-/* 상단 메뉴 */
-/* ===================== */
 .top-nav-table {
-    width: 100%;
-    border-collapse: collapse;
-    padding: 10px 0;
-    table-layout: fixed;
-    position: relative; /* 고정 제거 */
-    background-color: #fff8dc;
-    z-index: 1000;
+	width: 100%;
+	border-collapse: collapse;
+	padding: 10px 0;
+	table-layout: fixed;
+	position: relative;
+	background-color: #fff8dc;
+	z-index: 1000;
 }
 
 .top-nav-table td a {
-    font-size: 10pt;
-    text-decoration: none;
-    color: black;
-    padding: 0;
+	font-size: 10pt;
+	text-decoration: none;
+	color: black;
+	padding: 0;
 }
 
 .top-nav-table td a:hover {
-    color: yellow;
+	color: yellow;
 }
 
 .top-nav-table .left {
-    text-align: left;
-    padding-left: 10px;
+	text-align: left;
+	padding-left: 10px;
 }
 
 .top-nav-table .center {
-    text-align: center;
-    font-weight: bold;
-    font-size: 18px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 18px;
 }
 
 .top-nav-table .right {
-    text-align: right;
-    padding-right: 10px;
+	text-align: right;
+	padding-right: 10px;
 }
 
 .top-nav-table .right a {
-    font-size: 5pt;
-    margin: 0 5px;
-    letter-spacing: -1px;
-    white-space: nowrap;
+	font-size: 5pt;
+	margin: 0 5px;
+	letter-spacing: -1px;
+	white-space: nowrap;
 }
 
-/* ========================= */
-/* 메인 네비게이션 메뉴 */
-/* ========================= */
 .main-nav-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: center;
-    position: relative; /* 고정 제거 */
-    top: 0;
-    left: 0;
-    background-color: #fff8dc;
-    z-index: 999;
+	width: 100%;
+	border-collapse: collapse;
+	text-align: center;
+	position: relative;
+	top: 0;
+	left: 0;
+	background-color: #fff8dc;
+	z-index: 999;
 }
 
 .main-nav-table td {
-    width: 16.66%;
+	width: 16.66%;
 }
 
 .main-nav-table td a {
-    display: block;
-    padding: 5px 0;
-    text-decoration: none;
-    color: black;
+	display: block;
+	padding: 5px 0;
+	text-decoration: none;
+	color: black;
 }
 
 .main-nav-table td a:hover {
-    color: yellow;
+	color: yellow;
 }
 
-/* ===================== */
-/* 페이지 타이틀 */
-/* ===================== */
 #page-title {
-    font-size: 26px;
-    font-weight: bold;
-    color: #ff4500;
-    margin: 25px 0;
+	font-size: 26px;
+	font-weight: bold;
+	color: #ff4500;
+	margin: 25px 0;
 }
 
-/* ===================== */
-/* 리뷰 박스 */
-/* ===================== */
 .review-box {
-    width: 80%;
-    margin: 0 auto 30px auto;
-    padding: 20px;
-    background-color: #fff5e6;
-    border: 2px solid #ffa500;
-    border-radius: 8px;
-    text-align: left;
+	width: 80%;
+	margin: 0 auto 30px auto;
+	padding: 20px;
+	background-color: #fff5e6;
+	border: 2px solid #ffa500;
+	border-radius: 8px;
+	text-align: left;
 }
 
 .review-box p {
-    font-size: 14pt;
-    margin: 8px 0;
+	font-size: 14pt;
+	margin: 8px 0;
 }
 
 .review-box strong {
-    color: #ff4500;
+	color: #ff4500;
 }
 
-/* ===================== */
-/* 댓글 박스 */
-/* ===================== */
 .reply-box {
-    width: 80%;
-    margin: 0 auto 15px auto;
-    padding: 15px;
-    background-color: #fff5e6;
-    border: 1px solid #ffa500;
-    border-radius: 8px;
-    text-align: left;
+	width: 80%;
+	margin: 0 auto 15px auto;
+	padding: 15px;
+	background-color: #fff5e6;
+	border: 1px solid #ffa500;
+	border-radius: 8px;
+	text-align: left;
 }
 
 .reply-box:hover {
-    background-color: #ffe4b5;
+	background-color: #ffe4b5;
 }
 
 .reply-box strong {
-    color: #ff4500;
+	color: #ff4500;
 }
 
-/* ===================== */
-/* 댓글 없음 메시지 */
-/* ===================== */
 .no-reply {
-    font-size: 14pt;
-    margin-top: 20px;
-    color: #555;
+	font-size: 14pt;
+	margin-top: 20px;
+	color: #555;
 }
 
-/* ===================== */
-/* 댓글 작성 폼 */
-/* ===================== */
 .reply-form {
-    width: 80%;
-    margin: 30px auto;
-    padding: 20px;
-    background-color: #fff5e6;
-    border: 2px solid #ffa500;
-    border-radius: 8px;
-    text-align: left;
+	width: 80%;
+	margin: 30px auto;
+	padding: 20px;
+	background-color: #fff5e6;
+	border: 2px solid #ffa500;
+	border-radius: 8px;
+	text-align: left;
 }
 
 .reply-form label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: bold;
+	display: block;
+	margin-bottom: 10px;
+	font-weight: bold;
 }
 
 .reply-form input, .reply-form textarea {
-    width: 98%;
-    padding: 8px;
-    border: 1px solid #ffa500;
-    border-radius: 5px;
-    margin-top: 4px;
-    background-color: #fffaf0;
+	width: 98%;
+	padding: 8px;
+	border: 1px solid #ffa500;
+	border-radius: 5px;
+	margin-top: 4px;
+	background-color: #fffaf0;
 }
 
 .reply-form textarea {
-    height: 100px;
+	height: 100px;
 }
 
-/* ===================== */
-/* 버튼 스타일 */
-/* ===================== */
 button {
-    padding: 8px 20px;
-    background-color: #ff4500;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 12pt;
-    margin-top: 10px;
+	padding: 8px 20px;
+	background-color: #ff4500;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 12pt;
+	margin-top: 10px;
 }
 
 button:hover {
-    background-color: #ff7f50;
+	background-color: #ff7f50;
 }
 
 .back-btn {
-    margin-top: 20px;
+	margin-top: 20px;
 }
 
 .delete-btn {
-    color: red;
-    font-size: 11pt;
-    text-decoration: none;
-    margin-left: 10px;
+	color: red;
+	font-size: 11pt;
+	text-decoration: none;
+	margin-left: 10px;
 }
 
 .delete-btn:hover {
-    color: #ff4500;
+	color: #ff4500;
 }
 </style>
 </head>
 <body>
 
-    <!-- 상단 메뉴 프래그먼트 -->
-    <div th:replace="fragments/menu :: menu"></div>
 
-    <!-- 페이지 타이틀 -->
-    <h1 id="page-title">리뷰 상세</h1>
+	<div th:replace="fragments/menu :: menu"></div>
 
-    <!-- 리뷰 본문 -->
-    <div class="review-box">
-        <p>
-            <strong>작성자:</strong> <span th:text="${review.userName}"></span>
-        </p>
-        <p>
-            <strong>작성일:</strong> <span th:text="${review.createdAt}"></span>
-        </p>
-        <p>
-            <strong>내용:</strong>
-        </p>
-        <p th:text="${review.content}"></p>
-    </div>
 
-    <!-- 댓글 목록 -->
-    <h2 style="color: #ff4500;">댓글</h2>
+	<h1 id="page-title">리뷰 상세</h1>
 
-    <div th:if="${#lists.isEmpty(review.replies)}" class="no-reply">
-        등록된 댓글이 없습니다.
-    </div>
 
-    <div th:each="reply : ${review.replies}" class="reply-box">
-        <p>
-            <strong th:text="${reply.userName}"></strong> (<span
-                th:text="${reply.createdAt}"></span>) 
-            <a class="delete-btn"
-                th:href="@{'/reply/delete/' + ${review.id} + '/' + ${reply.id} + '.go'}">삭제</a>
-        </p>
-        <p th:text="${reply.content}"></p>
-    </div>
+	<div class="review-box">
+		<p>
+			<strong>작성자:</strong> <span th:text="${review.userName}"></span>
+		</p>
+		<p>
+			<strong>작성일:</strong> <span th:text="${review.createdAt}"></span>
+		</p>
+		<p>
+			<strong>내용:</strong>
+		</p>
+		<p th:text="${review.content}"></p>
+	</div>
 
-    <!-- 댓글 작성 폼 (작성자 숨김 처리) -->
-    <h2 style="color: #ff4500;">댓글 작성</h2>
-    <form th:action="@{/reply/create5.go}" th:object="${newReply}"
-        method="post" class="reply-form">
-        <input type="hidden" name="reviewId" th:value="${review.id}" />
-        <input type="hidden" th:field="*{userName}" th:value="${session.userName}" />
-        <label>내용: 
-            <textarea th:field="*{content}" required></textarea>
-        </label>
 
-        <button type="submit">댓글 작성</button>
-    </form>
+	<h2 style="color: #ff4500;">댓글</h2>
 
-    <!-- 뒤로가기 버튼 -->
-    <a th:href="@{/reviews.go}">
-        <button class="back-btn">리뷰 목록으로</button>
-    </a>
+	<div th:if="${#lists.isEmpty(review.replies)}" class="no-reply">
+		등록된 댓글이 없습니다.</div>
+
+	<div th:each="reply : ${review.replies}" class="reply-box">
+		<p>
+			<strong th:text="${reply.userName}"></strong> (<span
+				th:text="${reply.createdAt}"></span>) <a class="delete-btn"
+				th:href="@{'/reply/delete/' + ${review.id} + '/' + ${reply.id} + '.go'}">삭제</a>
+		</p>
+		<p th:text="${reply.content}"></p>
+	</div>
+
+
+	<h2 style="color: #ff4500;">댓글 작성</h2>
+	<form th:action="@{/reply/create5.go}" th:object="${newReply}"
+		method="post" class="reply-form">
+		<input type="hidden" name="reviewId" th:value="${review.id}" /> <input
+			type="hidden" th:field="*{userName}" th:value="${session.userName}" />
+		<label>내용: <textarea th:field="*{content}" required></textarea>
+		</label>
+
+		<button type="submit">댓글 작성</button>
+	</form>
+
+
+	<a th:href="@{/reviews.go}">
+		<button class="back-btn">리뷰 목록으로</button>
+	</a>
 
 </body>
 </html>

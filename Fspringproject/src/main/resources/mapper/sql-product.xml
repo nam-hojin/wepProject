@@ -5,34 +5,40 @@
 
 <mapper namespace="org.embed.mapper.ProductMapper">
 
-    <select id="selectAll" resultType="org.embed.dto.ProductDTO">
-        SELECT * FROM product ORDER BY product_id DESC
-    </select>
+	<select id="selectAll" resultType="org.embed.dto.ProductDTO">
+		SELECT * FROM product ORDER BY product_id DESC
+	</select>
 
-    <select id="selectById" parameterType="int" resultType="org.embed.dto.ProductDTO">
-        SELECT * FROM product WHERE product_id = #{productId}
-    </select>
+	<select id="selectById" parameterType="int"
+		resultType="org.embed.dto.ProductDTO">
+		SELECT * FROM product WHERE product_id = #{productId}
+	</select>
 
-    <insert id="insertProduct" parameterType="org.embed.dto.ProductDTO" useGeneratedKeys="true" keyProperty="productId">
-        INSERT INTO product
-        (name, category, price, stock, description, image_url, created_at, updated_at)
-        VALUES
-        (#{name}, #{category}, #{price}, #{stock}, #{description}, #{imageUrl}, NOW(), NOW())
-    </insert>
+	<insert id="insertProduct"
+		parameterType="org.embed.dto.ProductDTO" useGeneratedKeys="true"
+		keyProperty="productId">
+		INSERT INTO product
+		(name, category, price, stock, description, image_url, created_at,
+		updated_at)
+		VALUES
+		(#{name}, #{category}, #{price}, #{stock}, #{description}, #{imageUrl}, NOW(),
+		NOW())
+	</insert>
 
-    <update id="updateProduct" parameterType="org.embed.dto.ProductDTO">
-        UPDATE product
-        SET name = #{name},
-            category = #{category},
-            price = #{price},
-            stock = #{stock},
-            description = #{description},
-            image_url = #{imageUrl},
-            updated_at = NOW()
-        WHERE product_id = #{productId}
-    </update>
+	<update id="updateProduct"
+		parameterType="org.embed.dto.ProductDTO">
+		UPDATE product
+		SET name = #{name},
+		category = #{category},
+		price = #{price},
+		stock = #{stock},
+		description = #{description},
+		image_url = #{imageUrl},
+		updated_at = NOW()
+		WHERE product_id = #{productId}
+	</update>
 
-    <delete id="deleteProduct" parameterType="int">
-        DELETE FROM product WHERE product_id = #{productId}
-    </delete>
+	<delete id="deleteProduct" parameterType="int">
+		DELETE FROM product WHERE product_id = #{productId}
+	</delete>
 </mapper>

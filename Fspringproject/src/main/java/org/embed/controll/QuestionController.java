@@ -19,95 +19,123 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/question.eo")
 public class QuestionController {
 
-    private final QuestionService questionService;
+	private final QuestionService questionService;
 
-    public QuestionController(QuestionService questionService) {
-        this.questionService = questionService;
-    }
+	public QuestionController(QuestionService questionService) {
+		this.questionService = questionService;
+	}
 
-    // 루트 접근 시 목록 페이지로 리다이렉트
-    @GetMapping
-    public String redirectToList() {
-        return "redirect:/question.eo/list.eo";
-    }
+	@GetMapping
+	public String redirectToList() {
+		return "redirect:/question.eo/list.eo";
+	}
 
-    // 1. 질문 목록
-    @GetMapping("/list.eo")
-    public String questionList(Model model) throws Exception {
-        List<QuestionDTO> list = questionService.getQuestionList();
-        model.addAttribute("questionList", list);
-        return "question/questionList";
-    }
+	@GetMapping("/list.eo")
+	public String questionList(Model model) throws Exception {
+		List<QuestionDTO> list = questionService.getQuestionList();
+		model.addAttribute("questionList", list);
+		return "question/questionList";
+	}
 
-    // 2. 질문 상세
-    @GetMapping("/detail.eo/{postId}")
-    public String questionDetail(@PathVariable("postId") int postId, Model model) throws Exception {
-        QuestionDTO question = questionService.getQuestionDetail(postId);
-        model.addAttribute("question", question);
-        return "question/questionDetail";
-    }
+	@GetMapping("/detail.eo/{postId}")
+	public String questionDetail(@PathVariable("postId") int postId, Model model) throws Exception {
+		QuestionDTO question = questionService.getQuestionDetail(postId);
+		model.addAttribute("question", question);
+		return "question/questionDetail";
+	}
 
-    // 3. 질문 작성 (관리자만)
-    @GetMapping("/create.eo")
-    public String createForm(HttpSession session, Model model) {
-        UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
-        if (loginUser == null || !"ADMIN".equalsIgnoreCase(loginUser.getRole())) {
-            model.addAttribute("errorMessage", "관리자만 질문을 작성할 수 있습니다.");
-            return "redirect:/question.eo/list.eo";
-        }
-        return "question/questionCreate";
-    }
+	@GetMapping("/create.eo")
+	public String createForm(HttpSession session) {
+		UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
+		if (loginUser == null) {
+			return "redirect:/login.to";
+		}
+		return "question/questionCreate";
+	}
 
-    @PostMapping("/create.eo")
-    public String createQuestion(@ModelAttribute QuestionDTO question, HttpSession session, Model model) throws Exception {
-        UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
-        if (loginUser == null || !"ADMIN".equalsIgnoreCase(loginUser.getRole())) {
-            model.addAttribute("errorMessage", "관리자 권한이 없습니다.");
-            return "redirect:/question.eo/list.eo";
-        }
-        questionService.createQuestion(question);
-        return "redirect:/question.eo/list.eo";
-    }
+	@PostMapping("/create.eo")
+	public String createQuestion(@ModelAttribute QuestionDTO question, HttpSession session, Model model) {
+		UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
+		if (loginUser == null) {
+			return "redirect:/login.to";
+		}
 
-    // 4. 질문 수정 (관리자만)
-    @GetMapping("/update.eo/{postId}")
-    public String updateForm(@PathVariable("postId") int postId, HttpSession session, Model model) throws Exception {
-        UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
-        if (loginUser == null || !"ADMIN".equalsIgnoreCase(loginUser.getRole())) {
-            model.addAttribute("errorMessage", "관리자 권한이 없습니다.");
-            return "redirect:/question.eo/list.eo";
-        }
-        QuestionDTO question = questionService.getQuestionDetail(postId);
-        model.addAttribute("question", question);
-        return "question/questionUpdate";
-    }
+		// 작성자 자동 설정
+		question.setWriter(loginUser.getName());
 
-    @PostMapping("/update.eo")
-    public String updateQuestion(@ModelAttribute QuestionDTO question, HttpSession session, Model model) throws Exception {
-        UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
-        if (loginUser == null || !"ADMIN".equalsIgnoreCase(loginUser.getRole())) {
-            model.addAttribute("errorMessage", "관리자 권한이 없습니다.");
-            return "redirect:/question.eo/list.eo";
-        }
-        questionService.updateQuestion(question);
-        return "redirect:/question.eo/detail.eo/" + question.getPostId();
-    }
-    
-    @GetMapping("/delete.eo/{postId}")
-    public String deleteQuestion(@PathVariable("postId") int postId, HttpSession session, Model model) throws Exception {
-        UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
-        if (loginUser == null || !"ADMIN".equalsIgnoreCase(loginUser.getRole())) {
-            model.addAttribute("errorMessage", "관리자 권한이 없습니다.");
-            return "redirect:/question.eo/list.eo";
-        }
+		try {
+			questionService.createQuestion(question, loginUser);
+		} catch (RuntimeException e) {
+			model.addAttribute("errorMessage", e.getMessage());
+			return "redirect:/question.eo/list.eo";
+		}
+		return "redirect:/question.eo/list.eo";
+	}
 
-        questionService.deleteQuestion(postId);
-        return "redirect:/question.eo/list.eo";
-    }
-    
-    @GetMapping("/main.to") 
-    public String mainPage() {
-        return "main"; 
-    }
- 
+	@GetMapping("/update.eo/{postId}")
+	public String updateForm(@PathVariable("postId") int postId, HttpSession session, Model model) {
+		UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
+		if (loginUser == null) {
+			return "redirect:/login.to";
+		}
+
+		QuestionDTO question = questionService.getQuestionDetail(postId);
+
+		// 작성자가 로그인 사용자와 다르면 수정 불가
+		if (!loginUser.getName().equals(question.getWriter()) && !"ADMIN".equalsIgnoreCase(loginUser.getRole())) {
+			model.addAttribute("errorMessage", "수정 권한이 없습니다.");
+			return "redirect:/question.eo/list.eo";
+		}
+
+		model.addAttribute("question", question);
+		return "question/questionUpdate";
+	}
+
+	@PostMapping("/update.eo")
+	public String updateQuestion(@ModelAttribute QuestionDTO question, HttpSession session, Model model) {
+		UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
+		if (loginUser == null) {
+			return "redirect:/login.to";
+		}
+
+		// 작성자 자동 설정
+		question.setWriter(loginUser.getName());
+
+		try {
+			questionService.updateQuestion(question, loginUser);
+		} catch (RuntimeException e) {
+			model.addAttribute("errorMessage", e.getMessage());
+			return "redirect:/question.eo/list.eo";
+		}
+
+		return "redirect:/question.eo/detail.eo/" + question.getPostId();
+	}
+
+	@GetMapping("/delete.eo/{postId}")
+	public String deleteQuestion(@PathVariable("postId") int postId, HttpSession session, Model model) {
+		UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
+		if (loginUser == null) {
+			return "redirect:/login.to";
+		}
+
+		try {
+			QuestionDTO question = questionService.getQuestionDetail(postId);
+
+			// 작성자 본인 또는 관리자만 삭제 가능
+			if (!loginUser.getName().equals(question.getWriter()) && !"ADMIN".equalsIgnoreCase(loginUser.getRole())) {
+				model.addAttribute("errorMessage", "삭제 권한이 없습니다.");
+				return "redirect:/question.eo/list.eo";
+			}
+
+			questionService.deleteQuestion(postId, loginUser);
+		} catch (RuntimeException e) {
+			model.addAttribute("errorMessage", e.getMessage());
+		}
+		return "redirect:/question.eo/list.eo";
+	}
+
+	@GetMapping("/main.to")
+	public String mainPage() {
+		return "main";
+	}
 }

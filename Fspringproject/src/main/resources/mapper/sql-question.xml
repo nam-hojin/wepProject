@@ -5,53 +5,58 @@
 
 <mapper namespace="org.embed.mapper.QuestionMapper">
 
-	<!-- 1. 질문 목록 -->
+
 	<select id="getQuestionList"
 		resultType="org.embed.dto.QuestionDTO">
 		SELECT post_id AS postId,
 		title,
 		content,
 		writer,
-		view_count AS viewCount,
+		view_count AS
+		viewCount,
 		created_at AS createdAt,
 		updated_at AS updatedAt
 		FROM question
 		ORDER BY created_at DESC
 	</select>
 
-	<!-- 2. 질문 상세 -->
+
 	<select id="getQuestionDetail" parameterType="int"
 		resultType="org.embed.dto.QuestionDTO">
 		SELECT post_id AS postId,
 		title,
 		content,
 		writer,
-		view_count AS viewCount,
+		view_count AS
+		viewCount,
 		created_at AS createdAt,
 		updated_at AS updatedAt
 		FROM question
 		WHERE post_id = #{postId}
 	</select>
 
-	<!-- 3. 질문 작성 -->
+
 	<insert id="createQuestion"
 		parameterType="org.embed.dto.QuestionDTO" useGeneratedKeys="true"
 		keyProperty="postId">
-		INSERT INTO question (title, content, writer, view_count, created_at,
+		INSERT INTO question (title, content, writer, view_count,
+		created_at,
 		updated_at)
-		VALUES (#{title}, #{content}, #{writer}, 0, NOW(), NOW())
+		VALUES (#{title}, #{content}, #{writer}, 0,
+		NOW(), NOW())
 	</insert>
 
-	<!-- 4. 질문 수정 -->
+
 	<update id="updateQuestion"
 		parameterType="org.embed.dto.QuestionDTO">
 		UPDATE question
 		SET title = #{title},
-		content = #{content},
+		content =
+		#{content},
 		updated_at = NOW()
 		WHERE post_id = #{postId}
 	</update>
-	
+
 	<delete id="deleteQuestion" parameterType="int">
 		DELETE FROM question
 		WHERE post_id = #{postId}

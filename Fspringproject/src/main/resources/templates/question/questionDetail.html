@@ -1,186 +1,202 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>질문 상세</title>
-    <style>
-        /* ========================= */
-        /* 상단 네비게이션 고정      */
-        /* ========================= */
-        .top-nav-table {
-            width: 100%;
-            border-collapse: collapse;
-            padding: 10px 0;
-            table-layout: fixed;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: #fff8dc;
-            z-index: 1000;
-        }
+<meta charset="UTF-8">
+<title>질문 상세</title>
+<style>
+.top-nav-table {
+	width: 100%;
+	border-collapse: collapse;
+	padding: 10px 0;
+	table-layout: fixed;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: #fff8dc;
+	z-index: 1000;
+}
 
-        .top-nav-table td a {
-            font-size: 10pt;
-            text-decoration: none;
-            color: black;
-            padding: 0;
-        }
+.top-nav-table td a {
+	font-size: 10pt;
+	text-decoration: none;
+	color: black;
+	padding: 0;
+}
 
-        .top-nav-table td a:hover { color: yellow; }
+.top-nav-table td a:hover {
+	color: yellow;
+}
 
-        .top-nav-table .left { text-align: left; padding-left: 10px; }
-        .top-nav-table .center { text-align: center; font-weight: bold; font-size: 18px; }
-        .top-nav-table .right { text-align: right; padding-right: 10px; }
-        .top-nav-table .right a { font-size: 5pt; margin: 0 5px; letter-spacing: -1px; white-space: nowrap; }
+.top-nav-table .left {
+	text-align: left;
+	padding-left: 10px;
+}
 
-        /* ========================= */
-        /* 메인 네비게이션 고정      */
-        /* ========================= */
-        .main-nav-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: center;
-            position: fixed;
-            top: 50px;
-            left: 0;
-            background-color: #fff8dc;
-            z-index: 999;
-        }
+.top-nav-table .center {
+	text-align: center;
+	font-weight: bold;
+	font-size: 18px;
+}
 
-        .main-nav-table td { width: 16.66%; }
+.top-nav-table .right {
+	text-align: right;
+	padding-right: 10px;
+}
 
-        .main-nav-table td a {
-            display: block;
-            padding: 5px 0;
-            text-decoration: none;
-            color: black;
-        }
+.top-nav-table .right a {
+	font-size: 5pt;
+	margin: 0 5px;
+	letter-spacing: -1px;
+	white-space: nowrap;
+}
 
-        .main-nav-table td a:hover { color: yellow; }
+.main-nav-table {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: center;
+	position: fixed;
+	top: 50px;
+	left: 0;
+	background-color: #fff8dc;
+	z-index: 999;
+}
 
-        /* ========================= */
-        /* 본문 패딩 확보            */
-        /* ========================= */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fff8dc;
-            text-align: center;
-            padding-top: 90px;
-        }
+.main-nav-table td {
+	width: 16.66%;
+}
 
-        /* ========================= */
-        /* 페이지 타이틀             */
-        /* ========================= */
-        #page-title {
-            color: #ff4500;
-            margin-bottom: 20px;
-        }
+.main-nav-table td a {
+	display: block;
+	padding: 5px 0;
+	text-decoration: none;
+	color: black;
+}
 
-        /* ========================= */
-        /* 질문 상세 테이블 스타일    */
-        /* ========================= */
-        #question-table {
-            width: 90%;
-            margin: 0 auto 30px auto;
-            border-collapse: collapse;
-            background-color: #fff5e6;
-            border: 2px solid #ffa500;
-            border-radius: 8px;
-            overflow: hidden;
-        }
+.main-nav-table td a:hover {
+	color: yellow;
+}
 
-        #question-table th, #question-table td {
-            border: 1px solid #ffa500;
-            padding: 8px 12px;
-            text-align: left;
-            vertical-align: top;
-        }
+body {
+	font-family: Arial, sans-serif;
+	background-color: #fff8dc;
+	text-align: center;
+	padding-top: 90px;
+}
 
-        #question-table th {
-            background-color: #ffdab9;
-            font-weight: bold;
-            width: 20%;
-        }
+#page-title {
+	color: #ff4500;
+	margin-bottom: 20px;
+}
 
-        #question-table tr:nth-child(even) { background-color: #fff0d4; }
-        #question-table tr:hover { background-color: #ffe4b5; }
+#question-table {
+	width: 90%;
+	margin: 0 auto 30px auto;
+	border-collapse: collapse;
+	background-color: #fff5e6;
+	border: 2px solid #ffa500;
+	border-radius: 8px;
+	overflow: hidden;
+}
 
-        /* ========================= */
-        /* 버튼 스타일               */
-        /* ========================= */
-        button, a.button-link {
-            padding: 8px 15px;
-            background-color: #ff4500;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12pt;
-            margin: 5px;
-            text-decoration: none;
-            display: inline-block;
-            transition: background-color 0.3s;
-        }
+#question-table th, #question-table td {
+	border: 1px solid #ffa500;
+	padding: 8px 12px;
+	text-align: left;
+	vertical-align: top;
+}
 
-        button:hover, a.button-link:hover { background-color: #ff7f50; }
+#question-table th {
+	background-color: #ffdab9;
+	font-weight: bold;
+	width: 20%;
+}
 
-        .btn-container {
-            margin-top: 20px;
-        }
+#question-table tr:nth-child(even) {
+	background-color: #fff0d4;
+}
 
-        .btn-container a { text-decoration: none; }
+#question-table tr:hover {
+	background-color: #ffe4b5;
+}
 
-    </style>
+button, a.button-link {
+	padding: 8px 15px;
+	background-color: #ff4500;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 12pt;
+	margin: 5px;
+	text-decoration: none;
+	display: inline-block;
+	transition: background-color 0.3s;
+}
+
+button:hover, a.button-link:hover {
+	background-color: #ff7f50;
+}
+
+.btn-container {
+	margin-top: 20px;
+}
+
+.btn-container a {
+	text-decoration: none;
+}
+</style>
 </head>
 <body>
 
-<!-- 상단 메뉴 -->
-<div th:replace="fragments/menu :: menu"></div>
 
-<h1 id="page-title">질문 상세</h1>
+	<div th:replace="fragments/menu :: menu"></div>
 
-<table id="question-table">
-    <tr>
-        <th>번호</th>
-        <td th:text="${question.postId}"></td>
-    </tr>
-    <tr>
-        <th>제목</th>
-        <td th:text="${question.title}"></td>
-    </tr>
-    <tr>
-        <th>작성자</th>
-        <td th:text="${question.writer}"></td>
-    </tr>
-    <tr>
-        <th>조회수</th>
-        <td th:text="${question.viewCount}"></td>
-    </tr>
-    <tr>
-        <th>작성일</th>
-        <td th:text="${#dates.format(question.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
-    </tr>
-    <tr>
-        <th>내용</th>
-        <td th:text="${question.content}"></td>
-    </tr>
-</table>
+	<h1 id="page-title">질문 상세</h1>
 
-<div class="btn-container">
-    <!-- 관리자만 수정/삭제 버튼 -->
-    <div th:if="${session.loginUser != null and session.loginUser.role.equalsIgnoreCase('ADMIN')}">
-        <a th:href="@{'/question.eo/update.eo/' + ${question.postId}}">
-            <button type="button">수정</button>
-        </a>
-        <a th:href="@{'/question.eo/delete.eo/' + ${question.postId}}" onclick="return confirm('정말 삭제하시겠습니까?');">
-            <button type="button">삭제</button>
-        </a>
-    </div>
-    <!-- 목록 버튼 -->
-    <a href="/question.eo/list.eo" class="button-link">
-        <button type="button">목록</button>
-    </a>
-</div>
+	<table id="question-table">
+		<tr>
+			<th>번호</th>
+			<td th:text="${question.postId}"></td>
+		</tr>
+		<tr>
+			<th>제목</th>
+			<td th:text="${question.title}"></td>
+		</tr>
+		<tr>
+			<th>작성자</th>
+			<td th:text="${question.writer}"></td>
+		</tr>
+		<tr>
+			<th>조회수</th>
+			<td th:text="${question.viewCount}"></td>
+		</tr>
+		<tr>
+			<th>작성일</th>
+			<td
+				th:text="${#dates.format(question.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+		</tr>
+		<tr>
+			<th>내용</th>
+			<td th:text="${question.content}"></td>
+		</tr>
+	</table>
+
+	<div class="btn-container">
+
+		<div
+			th:if="${session.loginUser != null and session.loginUser.role.equalsIgnoreCase('ADMIN')}">
+			<a th:href="@{'/question.eo/update.eo/' + ${question.postId}}">
+				<button type="button">수정</button>
+			</a> <a th:href="@{'/question.eo/delete.eo/' + ${question.postId}}"
+				onclick="return confirm('정말 삭제하시겠습니까?');">
+				<button type="button">삭제</button>
+			</a>
+		</div>
+
+		<a href="/question.eo/list.eo" class="button-link">
+			<button type="button">목록</button>
+		</a>
+	</div>
 
 </body>
 </html>

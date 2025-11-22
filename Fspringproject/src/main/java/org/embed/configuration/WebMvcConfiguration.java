@@ -17,37 +17,36 @@ import jakarta.servlet.MultipartConfigElement;
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoggerInterceptor());
-    }
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new LoggerInterceptor());
+	}
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**")
-                .addResourceLocations("classpath:/static/");
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
 
-        // 외부 이미지 폴더 매핑
-        registry.addResourceHandler("/images/**")
-                .addResourceLocations("file:///C:/eclipse/eclipse-workspace/Fspringproject/images/");
-    }
+		// 외부 이미지 폴더 매핑
+		registry.addResourceHandler("/images/**")
+				.addResourceLocations("file:///C:/eclipse/eclipse-workspace/Fspringproject/images/");
+	}
 
-    @Bean
-    public MultipartResolver multipartResolver() {
-        return new StandardServletMultipartResolver();
-    }
+	@Bean
+	public MultipartResolver multipartResolver() {
+		return new StandardServletMultipartResolver();
+	}
 
-    @Bean
-    public MultipartConfigElement multipartConfigElement() {
-        MultipartConfigFactory factory = new MultipartConfigFactory();
-        factory.setLocation("C:\\eclipse\\eclipse-workspace\\Fspringproject\\");
-        factory.setMaxRequestSize(DataSize.ofMegabytes(100L));
-        factory.setMaxFileSize(DataSize.ofMegabytes(100L));
-        return factory.createMultipartConfig();
-    }
+	@Bean
+	public MultipartConfigElement multipartConfigElement() {
+		MultipartConfigFactory factory = new MultipartConfigFactory();
+		factory.setLocation("C:\\eclipse\\eclipse-workspace\\Fspringproject\\");
+		factory.setMaxRequestSize(DataSize.ofMegabytes(100L));
+		factory.setMaxFileSize(DataSize.ofMegabytes(100L));
+		return factory.createMultipartConfig();
+	}
 
-    @Bean
-    public HiddenHttpMethodFilter httpMethodFilter() {
-        return new HiddenHttpMethodFilter();
-    }
+	@Bean
+	public HiddenHttpMethodFilter httpMethodFilter() {
+		return new HiddenHttpMethodFilter();
+	}
 }

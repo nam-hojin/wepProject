@@ -1,153 +1,158 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <title>리뷰 작성</title>
-    <style>
-        /* ========================= */
-        /* 상단 네비게이션 고정      */
-        /* ========================= */
-        .top-nav-table {
-            width: 100%;
-            border-collapse: collapse;
-            padding: 10px 0;
-            table-layout: fixed;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: #fff8dc;
-            z-index: 1000;
-        }
+<meta charset="UTF-8" />
+<title>리뷰 작성</title>
+<style>
+.top-nav-table {
+	width: 100%;
+	border-collapse: collapse;
+	padding: 10px 0;
+	table-layout: fixed;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: #fff8dc;
+	z-index: 1000;
+}
 
-        .top-nav-table td a {
-            font-size: 10pt;
-            text-decoration: none;
-            color: black;
-            padding: 0;
-        }
+.top-nav-table td a {
+	font-size: 10pt;
+	text-decoration: none;
+	color: black;
+	padding: 0;
+}
 
-        .top-nav-table td a:hover { color: yellow; }
+.top-nav-table td a:hover {
+	color: yellow;
+}
 
-        .top-nav-table .left { text-align: left; padding-left: 10px; }
-        .top-nav-table .center { text-align: center; font-weight: bold; font-size: 18px; }
-        .top-nav-table .right { text-align: right; padding-right: 10px; }
-        .top-nav-table .right a { font-size: 5pt; margin: 0 5px; letter-spacing: -1px; white-space: nowrap; }
+.top-nav-table .left {
+	text-align: left;
+	padding-left: 10px;
+}
 
-        /* ========================= */
-        /* 메인 네비게이션 고정      */
-        /* ========================= */
-        .main-nav-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: center;
-            position: fixed;
-            top: 50px;
-            left: 0;
-            background-color: #fff8dc;
-            z-index: 999;
-        }
+.top-nav-table .center {
+	text-align: center;
+	font-weight: bold;
+	font-size: 18px;
+}
 
-        .main-nav-table td { width: 16.66%; }
+.top-nav-table .right {
+	text-align: right;
+	padding-right: 10px;
+}
 
-        .main-nav-table td a {
-            display: block;
-            padding: 5px 0;
-            text-decoration: none;
-            color: black;
-        }
+.top-nav-table .right a {
+	font-size: 5pt;
+	margin: 0 5px;
+	letter-spacing: -1px;
+	white-space: nowrap;
+}
 
-        .main-nav-table td a:hover { color: yellow; }
+.main-nav-table {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: center;
+	position: fixed;
+	top: 50px;
+	left: 0;
+	background-color: #fff8dc;
+	z-index: 999;
+}
 
-        /* ========================= */
-        /* 본문 패딩 확보            */
-        /* ========================= */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fff8dc;
-            text-align: center;
-            padding-top: 90px;
-        }
+.main-nav-table td {
+	width: 16.66%;
+}
 
-        /* ========================= */
-        /* 페이지 타이틀             */
-        /* ========================= */
-        #page-title {
-            color: #ff4500;
-            margin-bottom: 20px;
-        }
+.main-nav-table td a {
+	display: block;
+	padding: 5px 0;
+	text-decoration: none;
+	color: black;
+}
 
-        /* ========================= */
-        /* 폼 스타일                 */
-        /* ========================= */
-        form {
-            width: 60%;
-            margin: 0 auto 30px auto;
-            padding: 20px;
-            background-color: #fff5e6;
-            border: 2px solid #ffa500;
-            border-radius: 8px;
-            text-align: left;
-        }
+.main-nav-table td a:hover {
+	color: yellow;
+}
 
-        form p, form label {
-            display: block;
-            margin: 10px 0;
-            font-size: 12pt;
-        }
+body {
+	font-family: Arial, sans-serif;
+	background-color: #fff8dc;
+	text-align: center;
+	padding-top: 90px;
+}
 
-        form input[type="text"],
-        form input[type="number"],
-        form input[type="password"],
-        form textarea {
-            width: 100%;
-            padding: 5px;
-            font-size: 12pt;
-            border: 1px solid #ffa500;
-            border-radius: 4px;
-        }
+#page-title {
+	color: #ff4500;
+	margin-bottom: 20px;
+}
 
-        form textarea {
-            height: 100px;
-            resize: vertical;
-        }
+form {
+	width: 60%;
+	margin: 0 auto 30px auto;
+	padding: 20px;
+	background-color: #fff5e6;
+	border: 2px solid #ffa500;
+	border-radius: 8px;
+	text-align: left;
+}
 
-        /* ========================= */
-        /* 버튼 스타일               */
-        /* ========================= */
-        button, a.cancel-btn {
-            padding: 8px 15px;
-            background-color: #ff4500;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12pt;
-            margin: 5px;
-            text-decoration: none;
-            display: inline-block;
-            transition: background-color 0.3s;
-        }
+form p, form label {
+	display: block;
+	margin: 10px 0;
+	font-size: 12pt;
+}
 
-        button:hover, a.cancel-btn:hover { background-color: #ff7f50; }
+form input[type="text"], form input[type="number"], form input[type="password"],
+	form textarea {
+	width: 100%;
+	padding: 5px;
+	font-size: 12pt;
+	border: 1px solid #ffa500;
+	border-radius: 4px;
+}
 
-    </style>
+form textarea {
+	height: 100px;
+	resize: vertical;
+}
+
+button, a.cancel-btn {
+	padding: 8px 15px;
+	background-color: #ff4500;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 12pt;
+	margin: 5px;
+	text-decoration: none;
+	display: inline-block;
+	transition: background-color 0.3s;
+}
+
+button:hover, a.cancel-btn:hover {
+	background-color: #ff7f50;
+}
+</style>
 </head>
 <body>
 
-    <!-- 메뉴 불러오기 -->
-    <div th:replace="fragments/menu :: menu"></div>
 
-    <h1 id="page-title">리뷰 작성</h1>
+	<div th:replace="fragments/menu :: menu"></div>
 
-    <form th:action="@{/create1.go}" th:object="${newReview}" method="post">
-        <label>내용:
-            <textarea th:field="*{content}" placeholder="리뷰 내용을 작성하세요" required></textarea>
-        </label>
+	<h1 id="page-title">리뷰 작성</h1>
 
-        <button type="submit">작성</button>
-    </form>
+	<form th:action="@{/create1.go}" th:object="${newReview}" method="post">
+		<label>내용: <textarea th:field="*{content}"
+				placeholder="리뷰 내용을 작성하세요" required></textarea>
+		</label>
 
-    <a th:href="@{/reviews.go}" class="cancel-btn">취소</a>
+		<button type="submit">작성</button>
+	</form>
+
+	<a th:href="@{/reviews.go}" class="cancel-btn">목록</a>
 
 </body>
 

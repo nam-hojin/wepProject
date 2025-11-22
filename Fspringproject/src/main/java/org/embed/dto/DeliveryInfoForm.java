@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @Setter
 @NoArgsConstructor
 public class DeliveryInfoForm {
-    private List<DeliveryInfoDTO> deliveryInfoDTOs; // List로 감싸기
+	private List<DeliveryInfoDTO> deliveryInfoDTOs;
 }

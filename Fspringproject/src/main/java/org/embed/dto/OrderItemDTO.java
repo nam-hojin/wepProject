@@ -1,16 +1,14 @@
 package org.embed.dto;
 
-import java.time.LocalDateTime;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class OrderItemDTO {
-    private Long orderItemId;
-    private Long orderId;
-    private Integer productId;
-    private String productName;
-    private Integer quantity;
-    private Integer price;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+	private Long orderItemId;
+	private Long orderId;
+	private Integer productId;
+	private Integer quantity;
+	private Integer price;
 }

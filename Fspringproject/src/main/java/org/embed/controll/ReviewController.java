@@ -18,110 +18,100 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class ReviewController {
 
-    private final ReviewService reviewService;
+	private final ReviewService reviewService;
 
-    public ReviewController(ReviewService reviewService) {
-        this.reviewService = reviewService;
-    }
+	public ReviewController(ReviewService reviewService) {
+		this.reviewService = reviewService;
+	}
 
-    // 리뷰 목록
-    @GetMapping("/reviews.go")
-    public String getReviews(Model model) {
-        List<ReviewDTO> reviews = reviewService.getAllReviews();
-        model.addAttribute("reviews", reviews);
-        return "review/reviewList";
-    }
+	@GetMapping("/reviews.go")
+	public String getReviews(Model model) {
+		List<ReviewDTO> reviews = reviewService.getAllReviews();
+		model.addAttribute("reviews", reviews);
+		return "review/reviewList";
+	}
 
-    // 리뷰 작성 폼
-    @GetMapping("/create.go")
-    public String createReviewForm(Model model) {
-        model.addAttribute("newReview", new ReviewDTO());
-        return "review/reviewCreate";
-    }
+	@GetMapping("/create.go")
+	public String createReviewForm(Model model) {
+		model.addAttribute("newReview", new ReviewDTO());
+		return "review/reviewCreate";
+	}
 
-    // 리뷰 등록
-    @PostMapping("/create1.go")
-    public String addReview(@ModelAttribute ReviewDTO newReview, HttpSession session) {
-        UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
-        if (loginUser == null) return "redirect:/login.to";
+	@PostMapping("/create1.go")
+	public String addReview(@ModelAttribute ReviewDTO newReview, HttpSession session) {
+		UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
+		if (loginUser == null)
+			return "redirect:/login.to";
 
-        // 세션에서 사용자 정보 세팅
-        newReview.setUserId(loginUser.getUserId());
-        newReview.setUserName(loginUser.getName());
-        newReview.setUserPassword(loginUser.getUserPassword()); // 반드시 넣기
-        newReview.setCreatedAt(LocalDateTime.now().toString());
+		newReview.setUserId(loginUser.getUserId());
+		newReview.setUserName(loginUser.getName());
+		newReview.setUserPassword(loginUser.getUserPassword()); // 반드시 넣기
+		newReview.setCreatedAt(LocalDateTime.now().toString());
 
-        reviewService.createReview(newReview);
-        return "redirect:/reviews.go";
-    }
+		reviewService.createReview(newReview);
+		return "redirect:/reviews.go";
+	}
 
-    // 리뷰 삭제
-    @GetMapping("/delete/{id}.go")
-    public String deleteReview(@PathVariable("id") Long id) {
-        reviewService.deleteReview(id);
-        return "redirect:/reviews.go";
-    }
+	@GetMapping("/delete/{id}.go")
+	public String deleteReview(@PathVariable("id") Long id) {
+		reviewService.deleteReview(id);
+		return "redirect:/reviews.go";
+	}
 
-    // 리뷰 수정 폼
-    @GetMapping("/edit1/{id}.go")
-    public String editReviewForm(@PathVariable("id") Long id, Model model) {
-        List<ReviewDTO> reviews = reviewService.getAllReviews();
-        ReviewDTO review = reviews.stream().filter(r -> r.getId().equals(id)).findFirst().orElse(null);
-        if (review != null) {
-            model.addAttribute("review", review);
-            return "review/editReview";
-        }
-        return "redirect:/reviews.go";
-    }
+	@GetMapping("/edit1/{id}.go")
+	public String editReviewForm(@PathVariable("id") Long id, Model model) {
+		List<ReviewDTO> reviews = reviewService.getAllReviews();
+		ReviewDTO review = reviews.stream().filter(r -> r.getId().equals(id)).findFirst().orElse(null);
+		if (review != null) {
+			model.addAttribute("review", review);
+			return "review/editReview";
+		}
+		return "redirect:/reviews.go";
+	}
 
-    // 리뷰 수정 처리
-    @PostMapping("/edit2.go")
-    public String editReview(@ModelAttribute ReviewDTO editedReview, HttpSession session) {
-        UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
-        if (loginUser == null) return "redirect:/login.to";
+	@PostMapping("/edit2.go")
+	public String editReview(@ModelAttribute ReviewDTO editedReview, HttpSession session) {
+		UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
+		if (loginUser == null)
+			return "redirect:/login.to";
 
-        // 세션에서 비밀번호 유지
-        editedReview.setUserPassword(loginUser.getUserPassword());
-        reviewService.updateReview(editedReview);
-        return "redirect:/reviews.go";
-    }
+		editedReview.setUserPassword(loginUser.getUserPassword());
+		reviewService.updateReview(editedReview);
+		return "redirect:/reviews.go";
+	}
 
-    // 리뷰 상세보기
-    @GetMapping("/review/{id}.go")
-    public String viewReview(@PathVariable("id") Long id, Model model) {
-        List<ReviewDTO> reviews = reviewService.getAllReviews();
-        ReviewDTO review = reviews.stream().filter(r -> r.getId().equals(id)).findFirst().orElse(null);
-        if (review != null) {
-            model.addAttribute("review", review);
-            model.addAttribute("newReply", new ReplyDTO());
-            return "review/reviewDetail";
-        }
-        return "redirect:/reviews.go";
-    }
+	@GetMapping("/review/{id}.go")
+	public String viewReview(@PathVariable("id") Long id, Model model) {
+		List<ReviewDTO> reviews = reviewService.getAllReviews();
+		ReviewDTO review = reviews.stream().filter(r -> r.getId().equals(id)).findFirst().orElse(null);
+		if (review != null) {
+			model.addAttribute("review", review);
+			model.addAttribute("newReply", new ReplyDTO());
+			return "review/reviewDetail";
+		}
+		return "redirect:/reviews.go";
+	}
 
-    // 답변 작성
-    @PostMapping("/reply/create5.go")
-    public String addReply(@ModelAttribute ReplyDTO newReply,
-                           @RequestParam(name = "reviewId") Long reviewId,
-                           HttpSession session) {
-        UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
-        if (loginUser == null) return "redirect:/login.to";
+	@PostMapping("/reply/create5.go")
+	public String addReply(@ModelAttribute ReplyDTO newReply, @RequestParam(name = "reviewId") Long reviewId,
+			HttpSession session) {
+		UsDTO loginUser = (UsDTO) session.getAttribute("loginUser");
+		if (loginUser == null)
+			return "redirect:/login.to";
 
-        newReply.setUserId(loginUser.getUserId());
-        newReply.setUserName(loginUser.getName());
-        newReply.setUserPassword(loginUser.getUserPassword()); // 세션 사용
-        newReply.setReviewId(reviewId);
-        newReply.setCreatedAt(LocalDateTime.now().toString());
+		newReply.setUserId(loginUser.getUserId());
+		newReply.setUserName(loginUser.getName());
+		newReply.setUserPassword(loginUser.getUserPassword()); // 세션 사용
+		newReply.setReviewId(reviewId);
+		newReply.setCreatedAt(LocalDateTime.now().toString());
 
-        reviewService.createReply(newReply);
-        return "redirect:/review/" + reviewId + ".go";
-    }
+		reviewService.createReply(newReply);
+		return "redirect:/review/" + reviewId + ".go";
+	}
 
-    // 답변 삭제
-    @GetMapping("/reply/delete/{reviewId}/{replyId}.go")
-    public String deleteReply(@PathVariable("reviewId") Long reviewId,
-                              @PathVariable("replyId") Long replyId) {
-        reviewService.deleteReply(replyId);
-        return "redirect:/review/" + reviewId + ".go";
-    }
+	@GetMapping("/reply/delete/{reviewId}/{replyId}.go")
+	public String deleteReply(@PathVariable("reviewId") Long reviewId, @PathVariable("replyId") Long replyId) {
+		reviewService.deleteReply(replyId);
+		return "redirect:/review/" + reviewId + ".go";
+	}
 }
