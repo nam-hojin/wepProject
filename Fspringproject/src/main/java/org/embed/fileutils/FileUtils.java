@@ -1,87 +1,49 @@
 package org.embed.fileutils;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
-
-import org.embed.dto.UsFileDTO;
+import org.embed.dto.ProductDTO;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import javax.sql.DataSource;
 
 @Component
 public class FileUtils {
 
-    private final DataSource dataSource;
+	private final String BASE_PATH = "C:/eclipse/eclipse-workspace/Fspringproject/images/";
 
-    FileUtils(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
-public List<UsFileDTO> parseFileInfo(int boardId, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception{
-		
-		if (ObjectUtils.isEmpty(multipartHttpServletRequest)) {
+	public String saveFile(ProductDTO product) throws IOException {
+		MultipartFile file = product.getImageFile();
+		if (file == null || file.isEmpty())
 			return null;
-		}
-		
-		List<UsFileDTO> fileList = new ArrayList<UsFileDTO>();
-		
+
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
-		ZonedDateTime current = ZonedDateTime.now();
-		String path = "images/" + current.format(format);
-		
-		File file = new File(path);
-		if(file.exists() == false) {
-			file.mkdirs();
+		ZonedDateTime now = ZonedDateTime.now();
+		String folder = BASE_PATH + now.format(format);
+
+		Path dirPath = Paths.get(folder);
+		if (!Files.exists(dirPath)) {
+			Files.createDirectories(dirPath);
 		}
-		
-		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
-		String newFileName, originalFileExtension, contentType;
-		
-		while (iterator.hasNext()) {
-			
-			List<MultipartFile> list = multipartHttpServletRequest.getFiles(iterator.next());
-			for (MultipartFile multipartFile : list) {
-				if (multipartFile.isEmpty() == false) {
-					contentType = multipartFile.getContentType();
-					
-					if (ObjectUtils.isEmpty(contentType)) {
-						break;
-					} else {
-						if (contentType.contains("image/jpeg")) {
-							originalFileExtension = ".jpg";
-						} else if(contentType.contains("image/png")) {
-							originalFileExtension = ".png";
-						} else if(contentType.contains("image/gif")) {
-							originalFileExtension = ".gif";
-						} else {
-							break;
-						}
-					}
-					
-					newFileName = Long.toString(System.nanoTime()) + originalFileExtension;
-					UsFileDTO usFile = new UsFileDTO();
-					usFile.setUserId(0);
-					usFile.setFileSize(multipartFile.getSize());
-					usFile.setOriginalFileName(multipartFile.getOriginalFilename());
-					usFile.setStoredFilePath(path + "/" + newFileName);
-					fileList.add(usFile);
-					
-					file = new File(path + "/" + newFileName);
-					multipartFile.transferTo(file);
-					
-				}
-			}
+
+		String contentType = file.getContentType();
+		String extension = ".png";
+		if (contentType != null) {
+			if (contentType.contains("jpeg") || contentType.contains("jpg"))
+				extension = ".jpg";
+			else if (contentType.contains("gif"))
+				extension = ".gif";
 		}
-		
-		return fileList;
+
+		String newFileName = System.nanoTime() + extension;
+		Path filePath = dirPath.resolve(newFileName);
+		byte[] bytes = file.getBytes();
+		Files.write(filePath, bytes);
+
+		return "/images/" + now.format(format) + "/" + newFileName;
 	}
-		
 }

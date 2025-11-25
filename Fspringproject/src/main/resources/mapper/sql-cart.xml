@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.embed.mapper.CartMapper">
+
+
+	<insert id="insertCart" useGeneratedKeys="true"
+		keyProperty="cartId">
+		INSERT INTO cart (user_id, created_at, updated_at)
+		VALUES (#{userId}, #{createdAt}, #{updatedAt})
+	</insert>
+
+
+	<insert id="insertCartItem" useGeneratedKeys="true"
+		keyProperty="cartItemId">
+		INSERT INTO cart_item (cart_id, product_id, quantity, added_at)
+		VALUES (#{cartId}, #{productId}, #{quantity}, #{addedAt})
+	</insert>
+
+
+	<delete id="deleteCartItem">
+		DELETE FROM cart_item
+		WHERE cart_id = #{cartId} AND product_id = #{productId}
+	</delete>
+
+
+	<delete id="deleteCartItemByUserId">
+		DELETE ci
+		FROM cart_item ci
+		JOIN cart c ON ci.cart_id = c.cart_id
+		WHERE c.user_id = #{userId} AND ci.product_id = #{productId}
+	</delete>
+
+
+	<delete id="deleteCartItems">
+		DELETE FROM cart_item
+		WHERE cart_id = #{cartId}
+	</delete>
+
+
+	<delete id="deleteCartItemsByUserId">
+		DELETE ci
+		FROM cart_item ci
+		JOIN cart c ON ci.cart_id = c.cart_id
+		WHERE c.user_id = #{userId}
+	</delete>
+
+
+	<select id="selectCartByUserId" resultMap="cartResultMap">
+		SELECT
+		c.cart_id, c.user_id, c.created_at, c.updated_at,
+		ci.cart_item_id, ci.product_id, ci.quantity, ci.added_at
+		FROM cart c
+		LEFT JOIN cart_item ci ON c.cart_id = ci.cart_id
+		WHERE c.user_id = #{userId}
+	</select>
+
+
+	<select id="selectCartItems"
+		resultType="org.embed.dto.CartItemDTO">
+		SELECT cart_item_id, cart_id, product_id, quantity, added_at
+		FROM cart_item
+		WHERE cart_id = #{cartId}
+	</select>
+
+
+	<resultMap id="cartResultMap" type="org.embed.dto.CartDTO">
+		<id property="cartId" column="cart_id" />
+		<result property="userId" column="user_id" />
+		<result property="createdAt" column="created_at" />
+		<result property="updatedAt" column="updated_at" />
+		<collection property="items"
+			ofType="org.embed.dto.CartItemDTO">
+			<id property="cartItemId" column="cart_item_id" />
+			<result property="productId" column="product_id" />
+			<result property="quantity" column="quantity" />
+			<result property="addedAt" column="added_at" />
+		</collection>
+	</resultMap>
+
+</mapper>

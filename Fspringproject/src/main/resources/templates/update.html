@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<div th:replace="fragments/menu :: menu"></div>
+
+	<div class="signup-form">
+		<h2>회원정보수정</h2>
+		<body>
+			<form th:action="update.to" th:object="${user}" method="post">
+				아이디:<br> <input type="text" th:field="*{userName}" readonly /><br>
+				<br> 비밀번호:<br> <input type="password"
+					th:field="*{userPassword}" placeholder="새 비밀번호" /><br>
+				<br> 이름:<br> <input type="text" th:field="*{name}"
+					placeholder="이름" /><br>
+				<br> 전화번호:<br> <input type="text" th:field="*{phone}"
+					placeholder="010-1234-5678" /><br>
+				<br> 이메일:<br> <input type="email" th:field="*{email}"
+					placeholder="example@example.com" /><br>
+				<br> 생년월일:<br> <input type="text" th:field="*{birth}"
+					placeholder="YYYY-MM-DD" /><br>
+				<br> 성별:<br> <input type="text" th:field="*{gender}"
+					placeholder="남/여" /><br>
+				<br>
+
+				<button type="submit">수정하기</button>
+			</form>
+	</div>
+
+	<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

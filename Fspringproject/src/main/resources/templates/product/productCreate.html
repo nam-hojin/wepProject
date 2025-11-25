@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>상품 등록</title>
+<style>
+.top-nav-table {
+	width: 100%;
+	border-collapse: collapse;
+	padding: 10px 0;
+	table-layout: fixed;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: #fff8dc;
+	z-index: 1000;
+	border: none; /* 메뉴 선 제거 */
+}
+
+.top-nav-table td a {
+	font-size: 23pt;
+	text-decoration: none;
+	color: black;
+	padding: 0;
+}
+
+.top-nav-table td a:hover {
+	color: yellow;
+}
+
+.top-nav-table .left {
+	text-align: left;
+	padding-left: 10px;
+}
+
+.top-nav-table .center {
+	text-align: center;
+	font-weight: bold;
+	font-size: 23px;
+}
+
+.top-nav-table .right {
+	text-align: right;
+	padding-right: 10px;
+}
+
+.top-nav-table .right a {
+	font-size: 23pt;
+	margin: 0 5px;
+	letter-spacing: -1px;
+	white-space: nowrap;
+}
+
+.main-nav-table {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: center;
+	position: fixed;
+	top: 50px;
+	left: 0;
+	background-color: #fff8dc;
+	z-index: 999;
+	border: none;
+}
+
+.main-nav-table td {
+	width: 16.66%;
+}
+
+.main-nav-table td a {
+	display: block;
+	padding: 5px 0;
+	text-decoration: none;
+	color: black;
+}
+
+.main-nav-table td a:hover {
+	color: yellow;
+}
+
+body {
+	font-family: Arial, sans-serif;
+	background-color: #fff8dc;
+	text-align: center;
+	padding-top: 90px;
+}
+
+h1 {
+	color: #ff4500;
+	margin-bottom: 20px;
+}
+
+form {
+	width: 60%;
+	margin: 0 auto 30px auto;
+	padding: 20px;
+	background-color: #fff5e6;
+	border: 2px solid #ffa500;
+	border-radius: 8px;
+	text-align: left;
+}
+
+form p, form label {
+	display: block;
+	margin: 10px 0;
+	font-size: 12pt;
+}
+
+form input[type="text"], form input[type="number"], form input[type="file"],
+	form textarea {
+	width: 100%;
+	padding: 5px;
+	font-size: 12pt;
+	border: 1px solid #ffa500;
+	border-radius: 4px;
+}
+
+form textarea {
+	height: 100px;
+	resize: vertical;
+}
+
+button {
+	padding: 8px 15px;
+	background-color: #ff4500;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 12pt;
+	margin: 5px 0;
+	transition: background-color 0.3s;
+}
+
+button:hover {
+	background-color: #ff7f50;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+	font-size: 12pt;
+	margin-left: 10px;
+}
+
+a:hover {
+	color: #ff4500;
+}
+</style>
+</head>
+<body>
+
+	<div th:replace="fragments/menu :: menu"></div>
+
+	<h1>상품 등록</h1>
+	<form th:action="@{/admin/products/create.fo}"
+		th:object="${productDTO}" method="post" enctype="multipart/form-data">
+		<label>상품명:</label> <input type="text" th:field="*{name}" required />
+
+		<label>카테고리:</label> <input type="text" th:field="*{category}"
+			required /> <label>가격:</label> <input type="number"
+			th:field="*{price}" required /> <label>재고:</label> <input
+			type="number" th:field="*{stock}" required /> <label>설명:</label>
+		<textarea th:field="*{description}"></textarea>
+
+		<label>이미지:</label> <input type="file" th:field="*{imageFile}" />
+
+		<button type="submit">등록</button>
+
+
+		<a th:href="@{/admin/products.fo}">목록으로</a>
+	</form>
+
+</body>
+</html>

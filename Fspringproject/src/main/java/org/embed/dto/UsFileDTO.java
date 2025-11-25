@@ -1,16 +1,16 @@
 package org.embed.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class UsFileDTO {
 
-	
 	private int id;
 	private int userId;
 	private String originalFileName;
 	private String storedFilePath;
 	private long fileSize;
 
-	
 }

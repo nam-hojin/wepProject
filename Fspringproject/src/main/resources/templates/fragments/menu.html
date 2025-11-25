@@ -8,29 +8,47 @@
 <body>
 	<div th:fragment="menu">
 
+
 		<table class="top-nav-table">
 			<tr>
-
-				<td class="left"><a href="/main.to">홈</a></td>
-
-
+				<td class="left"><a th:href="@{/main.to}">홈</a></td>
 				<td class="center">비타민 마켓</td>
+				<td class="right"><span th:if="${session.loginUser != null}">
 
 
-				<td class="right"><a href="/login.to">로그인</a> <a href="/addUI.to">회원가입</a><a href="#">회원수정</a>
-					<a href="#">장바구니</a> <a href="#">고객센터</a></td>
+						<span
+						th:if="${session.loginUser != null and session.loginUser.role eq 'ADMIN'}">
+							<span th:text="${session.loginUser.userName}">관리자</span>님 환영합니다!
+							<a th:href="@{/logout.to}">로그아웃</a> <a
+							th:href="@{/admin/products.fo}">상품관리</a> <a
+							th:href="@{/admin/users.to}">회원관리</a>
+
+					</span> <span
+						th:if="${session.loginUser != null and session.loginUser.role != 'ADMIN'}">
+							<span th:text="${session.loginUser.userName}">사용자</span>님 환영합니다!
+							<a th:href="@{/logout.to}">로그아웃</a> <a th:href="@{/update.to}">회원수정</a>
+							<a th:href="@{/delete.to}">회원탈퇴</a> <a th:href="@{/cart}">장바구니</a>
+					</span>
+
+				</span> </span> <span th:unless="${session.loginUser != null}"> <a
+						th:href="@{/login.to}">로그인</a> <a th:href="@{/addUI.to}">회원가입</a>
+				</span> <a th:href="@{/customer.ko}">고객센터</a></td>
 			</tr>
 		</table>
 
 
 		<table class="main-nav-table">
 			<tr>
-				<td><a href="#">과일 목록</a></td>
-				<td><a href="#">공지사항</a></td>
-				<td><a href="#">문의사항</a></td>
-				<td><a href="#">리뷰게시판</a></td>
+				<td><a th:href="@{/admin/products.fo}">상품 목록</a></td>
+				<td><a th:href="@{/notice.do}">공지사항</a></td>
+				<td><a th:href="@{/question.eo}">문의사항</a></td>
+				<td><a th:href="@{/reviews.go}">리뷰게시판</a></td>
+				<td><a th:href="@{/JuiceRecipes.ko}">주스 레시피</a></td>
+				<td><a th:href="@{/Health.ko}">비타민 건강정보</a></td>
+
 			</tr>
 		</table>
+
 	</div>
 </body>
 </html>
